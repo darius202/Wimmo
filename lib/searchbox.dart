@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:wimmo/constants.dart';
+import 'package:wimmobeta/constants.dart';
 
 class SearchBox extends StatelessWidget{
 

@@ -1,4 +1,4 @@
-# wimmo
+# wimmobeta
 
 A new Flutter application.
 

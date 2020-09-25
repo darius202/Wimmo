@@ -1,8 +1,7 @@
-import 'package:wimmo/Services/Servicespage.dart';
-import 'package:wimmo/Services/data.dart';
+import 'package:wimmobeta/Services/Servicespage.dart';
+import 'package:wimmobeta/Services/data.dart';
 
 class Product{
-
   String id;
   String idadmin;
   String admincontact;
@@ -16,12 +15,24 @@ class Product{
   String description;
   String prix;
   String negoce;
+  String situationadministrative;
   String nbetage;
-  String nbpiece;
+  String nbsalon;
   String nbchambre;
-  String nbsallebain;
-  String nbtoilvisiteur;
-  String nbsallesejour;
+  String nbcuisine;
+  String nbsalledebain;
+  String newconstruire;
+  String dependance;
+  String garage;
+  String piscine;
+  String jardin;
+  String toilettevisiteur;
+  String 	debarras;
+  String compteurperso;
+  String arrierecours;
+  String 	balcon;
+  String meuble;
+  String ascensseur;
   String image1;
   String image2;
   String image3;
@@ -29,7 +40,8 @@ class Product{
   String date_inscrit;
 
   Product({this.id,this.idadmin,this.admincontact,this.intitule_bien,this.type_bien,this.type_mandat,this.superficie,this.pays,this.ville,this.quartier,
-    this.description,this.prix,this.negoce,this.nbetage,this.nbpiece,this.nbchambre,this.nbsallebain,this.nbtoilvisiteur,this.nbsallesejour, this.image1,this.image2,this.image3,this.image4,this.date_inscrit});
+    this.description,this.prix,this.negoce,this.situationadministrative,this.nbetage,this.nbsalon,this.nbchambre,this.nbcuisine,this.nbsalledebain,this.newconstruire,
+    this.dependance,this.garage,this.piscine,this.jardin,this.toilettevisiteur,this.debarras,this.compteurperso,this.arrierecours,this.balcon,this.meuble,this.ascensseur, this.image1,this.image2,this.image3,this.image4,this.date_inscrit});
 
   factory Product.fromJson(Map<String, dynamic> json){
     return Product(
@@ -46,12 +58,24 @@ class Product{
       description: json['description'] as String,
       prix: json['prix'] as String,
       negoce: json['negoce'] as String,
-      nbetage:json['nbetage'] as String,
-      nbpiece:json['nbpiece'] as String,
-      nbchambre:json['nbchambre'] as String,
-      nbsallebain:json['nbsallebain'] as String,
-      nbtoilvisiteur:json['nbtoilvisiteur'] as String,
-      nbsallesejour:json['nbsallesejour'] as String,
+      situationadministrative: json['situationadministrative'] as String,
+      nbetage: json['nbetage'] as String,
+      nbsalon: json['nbsalon'] as String,
+      nbchambre: json['nbchambre'] as String,
+      nbcuisine: json['nbcuisine'] as String,
+      nbsalledebain: json['nbsalledebain'] as String,
+      newconstruire: json['newconstruire'] as String,
+      dependance: json['dependance'] as String,
+      garage: json['garage'] as String,
+      piscine: json['piscine'] as String,
+      jardin: json['jardin'] as String,
+      toilettevisiteur: json['toilettevisiteur'] as String,
+      debarras: json['debarras'] as String,
+      compteurperso: json['compteurperso'] as String,
+      arrierecours: json['arrierecours'] as String,
+      balcon: json['balcon'] as String,
+      meuble: json['meuble'] as String,
+      ascensseur: json['ascensseur'] as String,
       image1:json['image1'] as String,
       image2:json['image2'] as String,
       image3:json['image3'] as String,
@@ -59,5 +83,8 @@ class Product{
       date_inscrit:json['date_inscrit'] as String,
     );
   }
+
 }
 List <Product> produts= List();
+
+List <Product> Filtreproducts= List();

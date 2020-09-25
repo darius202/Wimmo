@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:wimmo/constants.dart';
-import 'package:wimmo/product.dart';
+import 'package:wimmobeta/constants.dart';
+import 'package:wimmobeta/product.dart';
 import 'dart:io';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -51,11 +51,7 @@ class _PageViewDemoState extends State<PageViewDemo> {
         mandat: widget.produit.type_mandat,type: widget.produit.type_bien,
         superficie: widget.produit.superficie,
         nbetage: widget.produit.nbetage,
-        nbpiece:  widget.produit.nbpiece,
-        nbchambre:  widget.produit.nbchambre,
-        nbsallebain:  widget.produit.nbsallebain,
-        nbsallesejour:  widget.produit.nbsallesejour,
-        nbtoilvisiteur:  widget.produit.nbtoilvisiteur,),
+        ),
       ],
     );
   }
@@ -365,7 +361,7 @@ class _MyPage1WidgetState extends State<MyPage1Widget> {
                     child: FlatButton(
                         color: kBackgroundColor,
                         onPressed: (){
-                          launchWhatsApp("229"+widget.contact,"Annonce WImmo \n\n"+widget.title+" \nLocalisation: "+widget.pays+"-"+widget.ville+"-"+widget.quartier
+                          launchWhatsApp("229"+widget.contact,"Annonce wimmobeta \n\n"+widget.title+" \nLocalisation: "+widget.pays+"-"+widget.ville+"-"+widget.quartier
                           +"\nType du bien: "+widget.type+"\n"+"prix: "+widget.prix+" "+widget.negoce+"\n\nPrêt pour les négociations"+"\n https://gerestock.com/immo/images/"+ widget.image1);
                         }, child: Text("Envoyez un message",style: TextStyle(color:kPrimaryColor),)),
                   ),

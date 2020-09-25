@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:wimmo/constants.dart';
-import 'package:wimmo/Services/Servicespage.dart';
+import 'package:wimmobeta/constants.dart';
+import 'package:wimmobeta/Services/Servicespage.dart';
 class Suggestion extends StatefulWidget {
   @override
   _SuggestionState createState() => _SuggestionState();

@@ -1,13 +1,12 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:wimmo/Services/data.dart';
-import 'package:wimmo/product.dart';
+import 'package:wimmobeta/Services/data.dart';
+import 'package:wimmobeta/product.dart';
 
 
 class GetProduct{
   static const ROOT ='https://gerestock.com/immo/connectionClient.php';
-  static Future<List<Product>> getProduct(String mandat,String type,String pays,String ville,
-      String quartier) async {
+  static Future<List<Product>> getProduct(String mandat,String type,String pays,String ville) async {
     try{
       var map= Map<String, dynamic>();
       map['action']= 'Get_PODUCT';
@@ -15,7 +14,6 @@ class GetProduct{
       map['type']=type;
       map['pays']=pays;
       map['ville']=ville;
-      map['quartier']=quartier;
       final response = await http.post(ROOT,body:map);
       print('Voici le message du body getProduit : ${response.body}');
       if(200 == response.statusCode){
@@ -154,6 +152,67 @@ class TypeBienservices{
   }
 
 }
+
+
+class Situationservices{
+  static const ROOT ='https://gerestock.com/immo/localisation.php';
+  static const _GET_QUARTIER_ACTION= 'GET_SITUATION';
+
+  static Future<List<Situationadmin>> getSituationadmin() async {
+    try{
+      var map= Map<String, dynamic>();
+      map['action']= _GET_QUARTIER_ACTION;
+
+      final response = await http.post(ROOT,body:map);
+      print('Voici le message du body getSituationadmin: ${response.body}');
+      if(200 == response.statusCode){
+        List<Situationadmin> list = parseResponse(response.body);
+        return list;
+      }else{
+        return List<Situationadmin>();
+      }
+    }
+    catch(e){
+
+      return List<Situationadmin>();
+    }
+  }
+  static List<Situationadmin> parseResponse(String responseBody){
+    final parsed = json.decode(responseBody).cast<Map<String, dynamic>>();
+    return parsed.map<Situationadmin>((json) => Situationadmin.fromJson(json)).toList();
+  }
+
+}
+class Bienservices{
+  static const ROOT ='https://gerestock.com/immo/localisation.php';
+  static const _GET_QUARTIER_ACTION= 'GET_LOUER';
+
+  static Future<List<Bienlouable>> getLouer() async {
+    try{
+      var map= Map<String, dynamic>();
+      map['action']= _GET_QUARTIER_ACTION;
+
+      final response = await http.post(ROOT,body:map);
+      print('Voici le message du body getQuartier: ${response.body}');
+      if(200 == response.statusCode){
+        List<Bienlouable> list = parseResponse(response.body);
+        return list;
+      }else{
+        return List<Bienlouable>();
+      }
+    }
+    catch(e){
+
+      return List<Bienlouable>();
+    }
+  }
+  static List<Bienlouable> parseResponse(String responseBody){
+    final parsed = json.decode(responseBody).cast<Map<String, dynamic>>();
+    return parsed.map<Bienlouable>((json) => Bienlouable.fromJson(json)).toList();
+  }
+
+}
+
 
 class Etageservices{
   static const ROOT ='https://gerestock.com/immo/localisation.php';

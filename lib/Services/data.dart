@@ -91,6 +91,33 @@ class Mandat {
   }
 }
 
+class Bienlouable {
+  String id;
+  String bien;
+
+  Bienlouable({this.id, this.bien});
+
+  factory Bienlouable.fromJson(Map<String, dynamic> json) {
+    return Bienlouable(
+      id: json['id'] as String,
+      bien: json['bien'] as String,
+    );
+  }
+}
+class Situationadmin {
+  String id;
+  String situation;
+
+  Situationadmin({this.id, this.situation});
+
+  factory Situationadmin.fromJson(Map<String, dynamic> json) {
+    return Situationadmin(
+      id: json['id'] as String,
+      situation: json['situation'] as String,
+    );
+  }
+}
+List <Situationadmin> situation= List();
 class Etage{
   String id;
   String niveau;
@@ -102,3 +129,11 @@ class Etage{
     );
   }
 }
+List <Pays> pays;
+List <Ville> ville;
+List <Quartier> quartier;
+List <Mandat> mandat;
+List <Etage> etage;
+List <Bienlouable> louable;
+List <Quartier> quartierachat = List();
+List <Quartier> filtreQuartierachat = List();
