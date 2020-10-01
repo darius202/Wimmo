@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:grouped_buttons/grouped_buttons.dart';
 import 'package:wimmobeta/constants.dart';
@@ -43,10 +44,9 @@ class _DataBodyState extends State<DataBody> {
       child: Column(
         children: <Widget>[
           Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(
-                padding:  const EdgeInsets.only(top:20.0,right: 40.0, left: 40.0),
-                margin: const EdgeInsets.only(right: 20.0, left: 20.0),
                 child: CheckboxGroup(
                     labels: <String>[
                       "Cochez pour filtrer",
@@ -114,7 +114,7 @@ class _DataBodyState extends State<DataBody> {
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     children: <Widget>[
                                       Text(
-                                        Filtreproducts[index].type_bien !=null? Filtreproducts[index].type_bien :'Connexion impossible',
+                                        Filtreproducts[index].type_bien !=null? Filtreproducts[index].type_bien :'',
                                         style: TextStyle(
                                             fontSize: 18.0,
                                             color:kPrimaryColor,
@@ -123,7 +123,7 @@ class _DataBodyState extends State<DataBody> {
                                       ),
                                       SizedBox(width: 8.0,),
                                       Filtreproducts[index].nbetage!=null ?Text(
-                                        Filtreproducts[index].nbetage !=null? Filtreproducts[index].nbetage :'Connexion impossible',
+                                        Filtreproducts[index].nbetage !=null? Filtreproducts[index].nbetage :'',
                                         style: TextStyle(
                                             color:Colors.grey,
                                             fontSize: 14,
@@ -207,7 +207,7 @@ class _DataBodyState extends State<DataBody> {
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     children: <Widget>[
                                       Text(
-                                        produts[index].prix!=null? moneyFormat(Filtreproducts[index].prix)+" Fcfa ":'Connexion impossible...',
+                                        produts[index].prix!=null? moneyFormat(Filtreproducts[index].prix)+" Fcfa ":'',
                                         style: TextStyle(
                                             fontSize: 18.0,
                                             color: Colors.red,
@@ -222,7 +222,7 @@ class _DataBodyState extends State<DataBody> {
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     children: <Widget>[
                                       Text(
-                                        Filtreproducts[index].negoce!=null? Filtreproducts[index].negoce:'Connexion impossible...',
+                                        Filtreproducts[index].negoce!=null? Filtreproducts[index].negoce:'',
                                         style: TextStyle(
                                             color: kTextLigthtColor,
                                             fontWeight: FontWeight.bold,
@@ -237,7 +237,7 @@ class _DataBodyState extends State<DataBody> {
                                     children: <Widget>[
                                       Icon(Icons.location_on),
                                       Text(
-                                        Filtreproducts[index].quartier!=null? Filtreproducts[index].quartier+',':'Connexion impossible...',
+                                        Filtreproducts[index].quartier!=null? Filtreproducts[index].quartier+',':'',
                                         style: TextStyle(
                                             color: Colors.grey,
                                             fontWeight: FontWeight.bold,
@@ -245,7 +245,7 @@ class _DataBodyState extends State<DataBody> {
                                         ),
                                       ),
                                       Text(
-                                        Filtreproducts[index].ville!=null? Filtreproducts[index].ville+'-':'Connexion impossible...',
+                                        Filtreproducts[index].ville!=null? Filtreproducts[index].ville+'-':'',
                                         style: TextStyle(
                                             color: Colors.grey,
                                             fontWeight: FontWeight.bold,
@@ -253,7 +253,7 @@ class _DataBodyState extends State<DataBody> {
                                         ),
                                       ),
                                       Text(
-                                        Filtreproducts[index].pays!=null? Filtreproducts[index].pays:'Connexion impossible...',
+                                        Filtreproducts[index].pays!=null? Filtreproducts[index].pays:'',
                                         style: TextStyle(
                                             color: Colors.grey,
                                             fontWeight: FontWeight.bold,

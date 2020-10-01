@@ -89,7 +89,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
                         Text(
-                          widget.annonce.type_bien !=null? widget.annonce.type_bien +" à "+widget.annonce.ville+"  ("+widget.annonce.type_mandat+")" :'Connexion impossible',
+                          widget.annonce.type_bien !=null? widget.annonce.type_bien +" à "+widget.annonce.ville+"  ("+widget.annonce.type_mandat+")" :'',
                           style: TextStyle(
                               fontSize: 18.0,
                               color:kPrimaryColor,
@@ -119,7 +119,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
                         Text(
-                          widget.annonce.prix!=null? moneyFormat(widget.annonce.prix)+" Fcfa":'Connexion impossible...',
+                          widget.annonce.prix!=null? moneyFormat(widget.annonce.prix)+" Fcfa":'',
                           style: TextStyle(
                               fontSize: 20.0,
                               color: Colors.red,
@@ -128,7 +128,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                           ),
                         ),
                         Text(
-                          widget.annonce.negoce!=null? " "+widget.annonce.negoce:'Connexion impossible...',
+                          widget.annonce.negoce!=null? " "+widget.annonce.negoce:'',
                           style: TextStyle(
                               color: kTextLigthtColor,
                               fontWeight: FontWeight.bold,
@@ -186,7 +186,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                     children: [
                       Icon(Icons.location_on,),
                       Text(
-                        widget.annonce.quartier!=null?  widget.annonce.quartier+',':'Connexion impossible...',
+                        widget.annonce.quartier!=null?  widget.annonce.quartier+',':'',
                         style: TextStyle(
                             color: kTextLigthtColor,
                             fontWeight: FontWeight.bold,
@@ -194,7 +194,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                         ),
                       ),
                       Text(
-                        widget.annonce.ville!=null?  widget.annonce.ville+'-':'Connexion impossible...',
+                        widget.annonce.ville!=null?  widget.annonce.ville+'-':'',
                         style: TextStyle(
                             color: kTextLigthtColor,
                             fontWeight: FontWeight.bold,
@@ -202,7 +202,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                         ),
                       ),
                       Text(
-                        widget.annonce.pays!=null?  widget.annonce.pays:'Connexion impossible...',
+                        widget.annonce.pays!=null?  widget.annonce.pays:'',
                         style: TextStyle(
                             color:kTextLigthtColor,
                             fontWeight: FontWeight.bold,
@@ -213,7 +213,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                       Icon(Icons.phone,),
                       SizedBox(width: 5.0,),
                       Text(
-                        widget.annonce.admincontact!=null?  widget.annonce.admincontact:'Connexion impossible...',
+                        widget.annonce.admincontact!=null?  widget.annonce.admincontact:'',
                         style: TextStyle(
                             color:kTextLigthtColor,
                             fontWeight: FontWeight.bold,
@@ -329,7 +329,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
               children: <Widget>[
                 Icon(Icons.location_on,),
                 Text(
-                  widget.annonce.quartier!=null?  widget.annonce.quartier+',':'Connexion impossible...',
+                  widget.annonce.quartier!=null?  widget.annonce.quartier+',':'',
                   style: TextStyle(
                       color: kTextLigthtColor,
                       fontWeight: FontWeight.bold,
@@ -337,7 +337,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                   ),
                 ),
                 Text(
-                  widget.annonce.ville!=null?  widget.annonce.ville+'-':'Connexion impossible...',
+                  widget.annonce.ville!=null?  widget.annonce.ville+'-':'',
                   style: TextStyle(
                       color: kTextLigthtColor,
                       fontWeight: FontWeight.bold,
@@ -345,7 +345,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                   ),
                 ),
                 Text(
-                  widget.annonce.pays!=null?  widget.annonce.pays:'Connexion impossible...',
+                  widget.annonce.pays!=null?  widget.annonce.pays:'',
                   style: TextStyle(
                       color: kTextLigthtColor,
                       fontWeight: FontWeight.bold,
@@ -356,7 +356,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                 Icon(Icons.phone,),
                 SizedBox(width: 5.0,),
                 Text(
-                  widget.annonce.admincontact!=null?  widget.annonce.admincontact:'Connexion impossible...',
+                  widget.annonce.admincontact!=null?  widget.annonce.admincontact:'',
                   style: TextStyle(
                       color:kTextLigthtColor,
                       fontWeight: FontWeight.bold,
@@ -566,7 +566,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
               children: <Widget>[
                 Icon(Icons.location_on,),
                 Text(
-                  widget.annonce.quartier!=null?  widget.annonce.quartier+',':'Connexion impossible...',
+                  widget.annonce.quartier!=null?  widget.annonce.quartier+',':'',
                   style: TextStyle(
                       color: kTextLigthtColor,
                       fontWeight: FontWeight.bold,
@@ -574,7 +574,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                   ),
                 ),
                 Text(
-                  widget.annonce.ville!=null?  widget.annonce.ville+'-':'Connexion impossible...',
+                  widget.annonce.ville!=null?  widget.annonce.ville+'-':'',
                   style: TextStyle(
                       color: kTextLigthtColor,
                       fontWeight: FontWeight.bold,
@@ -582,7 +582,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                   ),
                 ),
                 Text(
-                  widget.annonce.pays!=null?  widget.annonce.pays:'Connexion impossible...',
+                  widget.annonce.pays!=null?  widget.annonce.pays:'',
                   style: TextStyle(
                       color: kTextLigthtColor,
                       fontWeight: FontWeight.bold,
@@ -593,7 +593,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                 Icon(Icons.phone,),
                 SizedBox(width: 5.0,),
                 Text(
-                  widget.annonce.admincontact!=null?  widget.annonce.admincontact:'Connexion impossible...',
+                  widget.annonce.admincontact!=null?  widget.annonce.admincontact:'',
                   style: TextStyle(
                       color:kTextLigthtColor,
                       fontWeight: FontWeight.bold,
@@ -799,7 +799,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
               children: <Widget>[
                 Icon(Icons.location_on,),
                 Text(
-                  widget.annonce.quartier!=null?  widget.annonce.quartier+',':'Connexion impossible...',
+                  widget.annonce.quartier!=null?  widget.annonce.quartier+',':'',
                   style: TextStyle(
                       color: kTextLigthtColor,
                       fontWeight: FontWeight.bold,
@@ -807,7 +807,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                   ),
                 ),
                 Text(
-                  widget.annonce.ville!=null?  widget.annonce.ville+'-':'Connexion impossible...',
+                  widget.annonce.ville!=null?  widget.annonce.ville+'-':'',
                   style: TextStyle(
                       color: kTextLigthtColor,
                       fontWeight: FontWeight.bold,
@@ -815,7 +815,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                   ),
                 ),
                 Text(
-                  widget.annonce.pays!=null?  widget.annonce.pays:'Connexion impossible...',
+                  widget.annonce.pays!=null?  widget.annonce.pays:'',
                   style: TextStyle(
                       color: kTextLigthtColor,
                       fontWeight: FontWeight.bold,
@@ -826,7 +826,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                 Icon(Icons.phone,),
                 SizedBox(width: 5.0,),
                 Text(
-                  widget.annonce.admincontact!=null?  widget.annonce.admincontact:'Connexion impossible...',
+                  widget.annonce.admincontact!=null?  widget.annonce.admincontact:'',
                   style: TextStyle(
                       color:kTextLigthtColor,
                       fontWeight: FontWeight.bold,
@@ -1025,7 +1025,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
               children: <Widget>[
                 Icon(Icons.location_on,),
                 Text(
-                  widget.annonce.quartier!=null?  widget.annonce.quartier+',':'Connexion impossible...',
+                  widget.annonce.quartier!=null?  widget.annonce.quartier+',':'',
                   style: TextStyle(
                       color: kTextLigthtColor,
                       fontWeight: FontWeight.bold,
@@ -1033,7 +1033,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                   ),
                 ),
                 Text(
-                  widget.annonce.ville!=null?  widget.annonce.ville+'-':'Connexion impossible...',
+                  widget.annonce.ville!=null?  widget.annonce.ville+'-':'',
                   style: TextStyle(
                       color: kTextLigthtColor,
                       fontWeight: FontWeight.bold,
@@ -1041,7 +1041,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                   ),
                 ),
                 Text(
-                  widget.annonce.pays!=null?  widget.annonce.pays:'Connexion impossible...',
+                  widget.annonce.pays!=null?  widget.annonce.pays:'',
                   style: TextStyle(
                       color: kTextLigthtColor,
                       fontWeight: FontWeight.bold,
@@ -1052,7 +1052,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                 Icon(Icons.phone,),
                 SizedBox(width: 5.0,),
                 Text(
-                  widget.annonce.admincontact!=null?  widget.annonce.admincontact:'Connexion impossible...',
+                  widget.annonce.admincontact!=null?  widget.annonce.admincontact:'',
                   style: TextStyle(
                       color:kTextLigthtColor,
                       fontWeight: FontWeight.bold,
