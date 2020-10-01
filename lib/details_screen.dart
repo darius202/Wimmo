@@ -81,6 +81,36 @@ class _DetailsScreenState extends State<DetailsScreen> {
               ),
             ),
             SizedBox(height: 18,),
+            Container(
+              margin: EdgeInsets.only(left:20.0,right: 20.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Flexible(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Text(
+                          widget.annonce.adminpseudo!=null?"Publié par: ":'',
+                          style: TextStyle(
+                              color: kPrimaryColor,
+                              fontStyle: FontStyle.normal
+                          ),
+                        ),
+                        Text(
+                          widget.annonce.adminpseudo!=null?widget.annonce.adminpseudo:'',
+                          style: TextStyle(
+                              color: kPrimaryColor,
+                              fontStyle: FontStyle.normal
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(height: 8.0,),
              Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
@@ -119,7 +149,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
                         Text(
-                          widget.annonce.prix!=null? moneyFormat(widget.annonce.prix)+" Fcfa":'',
+                          widget.annonce.prix!=null?widget.annonce.prix+" Fcfa":'',
                           style: TextStyle(
                               fontSize: 20.0,
                               color: Colors.red,
@@ -165,12 +195,14 @@ class _DetailsScreenState extends State<DetailsScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
+                widget.annonce.superficie.isNotEmpty?
                 Image.asset("assets/dim.png",
-                  height: 40,),
+                  height: 40,):Container(),
                 SizedBox(width: 5.0,),
                 Text(widget.annonce.superficie+" m2",style:TextStyle(color:kTextLigthtColor,fontWeight: FontWeight.bold,)),
                 SizedBox(width: 20.0,),
-                Image.asset("assets/admi.png",),
+                widget.annonce.situationadministrative.isNotEmpty?
+                Image.asset("assets/admi.png",):Container(),
                 SizedBox(width: 5.0,),
                 Text(widget.annonce.situationadministrative,style:TextStyle(color:kTextLigthtColor,fontWeight: FontWeight.bold,)),
               ],
@@ -292,37 +324,65 @@ class _DetailsScreenState extends State<DetailsScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
+                widget.annonce.superficie.isNotEmpty?
                 Image.asset("assets/dim.png",
-                  height: 40,),
+                  height: 40,):Container(),
                 SizedBox(width: 5.0,),
-                Text(widget.annonce.superficie+" m2",style:TextStyle(color:kTextLigthtColor,fontWeight: FontWeight.bold,)),
+                widget.annonce.superficie.isNotEmpty?
+                Text(widget.annonce.superficie+" m2",style:TextStyle(color:kTextLigthtColor,fontWeight: FontWeight.bold,)):Container(),
                 SizedBox(width: 20.0,),
-                Image.asset("assets/admi.png",),
+                widget.annonce.situationadministrative.isNotEmpty?
+                Image.asset("assets/admi.png",):Container(),
                 SizedBox(width: 5.0,),
-                Text(widget.annonce.situationadministrative,style:TextStyle(color:kTextLigthtColor,fontWeight: FontWeight.bold,)),
+                widget.annonce.situationadministrative.isNotEmpty?
+                Text(widget.annonce.situationadministrative,style:TextStyle(color:kTextLigthtColor,fontWeight: FontWeight.bold,)):Container(),
               ],
             ),
             SizedBox(height: 8.0,),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                Image.asset('assets/salon.png',fit: BoxFit.cover,),
+                widget.annonce.nbsalon.isNotEmpty?
+                Image.asset('assets/salon.png',fit: BoxFit.cover,):Container(),
                 SizedBox(width: 5.0,),
-                Text(widget.annonce.nbsalon+" salon",style: TextStyle(color:kTextLigthtColor,fontWeight: FontWeight.bold),),
+                widget.annonce.nbsalon.isNotEmpty?
+                Text(widget.annonce.nbsalon+" salon",style: TextStyle(color:kTextLigthtColor,fontWeight: FontWeight.bold),):Container(),
                 SizedBox(width: 8.0,),
-                Image.asset('assets/chambre.png',fit: BoxFit.cover,),
+                widget.annonce.nbchambre.isNotEmpty?
+                Image.asset('assets/chambre.png',fit: BoxFit.cover,):Container(),
                 SizedBox(width: 5.0,),
-                Text(widget.annonce.nbchambre+" chambre",style: TextStyle(color:kTextLigthtColor,fontWeight: FontWeight.bold),),
+                widget.annonce.nbchambre.isNotEmpty?
+                Text(widget.annonce.nbchambre+" chambre",style: TextStyle(color:kTextLigthtColor,fontWeight: FontWeight.bold),):Container(),
                 SizedBox(width: 5.0,),
-                Image.asset('assets/cuisine.png',fit: BoxFit.cover,),
+                widget.annonce.nbcuisine.isNotEmpty?
+                Image.asset('assets/cuisine.png',fit: BoxFit.cover,):Container(),
                 SizedBox(width: 5.0,),
-                Text(widget.annonce.nbcuisine+" cuisine",style: TextStyle(color:kTextLigthtColor,fontWeight: FontWeight.bold),),
+                widget.annonce.nbcuisine.isNotEmpty?
+                Text(widget.annonce.nbcuisine+" cuisine",style: TextStyle(color:kTextLigthtColor,fontWeight: FontWeight.bold),):Container(),
                 SizedBox(width: 5.0,),
-                Image.asset('assets/bain.png',fit: BoxFit.cover,),
+                widget.annonce.nbcuisine.isNotEmpty?
+                Image.asset('assets/bain.png',fit: BoxFit.cover,):Container(),
                 SizedBox(width: 5.0,),
-                Text(widget.annonce.nbsalledebain+" douche",style: TextStyle(color:kTextLigthtColor,fontWeight: FontWeight.bold),),
+                widget.annonce.nbcuisine.isNotEmpty?
+                Text(widget.annonce.nbsalledebain+" douche",style: TextStyle(color:kTextLigthtColor,fontWeight: FontWeight.bold),):Container(),
               ],
             ),
+            SizedBox(height: 8.0,),
+            widget.annonce.type_bien==villa?
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
+                SizedBox(width: MediaQuery.of(context).size.width/4,),
+                widget.annonce.nbboutique!=null?
+                Text(widget.annonce.nbboutique+" Boutique",style:TextStyle(color:kPrimaryColor,fontWeight: FontWeight.bold)):Container(),
+                SizedBox(width: 5.0,),
+                widget.annonce.nbmagasin!=null?
+                Text(widget.annonce.nbmagasin+" Magasin",style:TextStyle(color:kPrimaryColor,fontWeight: FontWeight.bold)):Container(),
+                SizedBox(width: 5.0,),
+                widget.annonce.nbhall!=null?
+                Text(widget.annonce.nbhall+" Hall",style:TextStyle(color:kPrimaryColor,fontWeight: FontWeight.bold)):Container(),
+              ],
+            ):Container(),
             SizedBox(height: 8.0,),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -776,23 +836,43 @@ class _DetailsScreenState extends State<DetailsScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                Image.asset('assets/salon.png',fit: BoxFit.cover,),
+                widget.annonce.nbsalon.isNotEmpty?
+                Image.asset('assets/salon.png',fit: BoxFit.cover,):Container(),
                 SizedBox(width: 5.0,),
                 Text(widget.annonce.nbsalon+" salon",style: TextStyle(color:kTextLigthtColor,fontWeight: FontWeight.bold),),
                 SizedBox(width: 8.0,),
-                Image.asset('assets/chambre.png',fit: BoxFit.cover,),
+                widget.annonce.nbchambre.isNotEmpty?
+                Image.asset('assets/chambre.png',fit: BoxFit.cover,):Container(),
                 SizedBox(width: 5.0,),
                 Text(widget.annonce.nbchambre+" chambre",style: TextStyle(color:kTextLigthtColor,fontWeight: FontWeight.bold),),
                 SizedBox(width: 5.0,),
-                Image.asset('assets/cuisine.png',fit: BoxFit.cover,),
+                widget.annonce.nbcuisine.isNotEmpty?
+                Image.asset('assets/cuisine.png',fit: BoxFit.cover,):Container(),
                 SizedBox(width: 5.0,),
                 Text(widget.annonce.nbcuisine+" cuisine",style: TextStyle(color:kTextLigthtColor,fontWeight: FontWeight.bold),),
                 SizedBox(width: 5.0,),
-                Image.asset('assets/bain.png',fit: BoxFit.cover,),
+                widget.annonce.nbsalledebain.isNotEmpty?
+                Image.asset('assets/bain.png',fit: BoxFit.cover,):Container(),
                 SizedBox(width: 5.0,),
                 Text(widget.annonce.nbsalledebain+" douche",style: TextStyle(color:kTextLigthtColor,fontWeight: FontWeight.bold),),
               ],
             ),
+            SizedBox(height: 8.0,),
+            widget.annonce.type_bien==villa?
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
+                SizedBox(width: MediaQuery.of(context).size.width/4,),
+                widget.annonce.nbboutique!=null?
+                Text(widget.annonce.nbboutique+" Boutique",style:TextStyle(color:kPrimaryColor,fontWeight: FontWeight.bold)):Container(),
+                SizedBox(width: 5.0,),
+                widget.annonce.nbmagasin!=null?
+                Text(widget.annonce.nbmagasin+" Magasin",style:TextStyle(color:kPrimaryColor,fontWeight: FontWeight.bold)):Container(),
+                SizedBox(width: 5.0,),
+                widget.annonce.nbhall!=null?
+                Text(widget.annonce.nbhall+" Hall",style:TextStyle(color:kPrimaryColor,fontWeight: FontWeight.bold)):Container(),
+              ],
+            ):Container(),
             SizedBox(height: 8.0,),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,

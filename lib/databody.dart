@@ -201,13 +201,27 @@ class _DataBodyState extends State<DataBody> {
                                       Text(Filtreproducts[index].nbchambre+" pièce"),
                                     ],
                                   ):Container(),
-
+                                  SizedBox(height: 8.0,),
+                                  Filtreproducts[index].type_bien==villa?
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: <Widget>[
+                                      Filtreproducts[index].nbboutique!=null?
+                                      Text(Filtreproducts[index].nbboutique+" Boutique",style:TextStyle(fontSize:12,color:kPrimaryColor)):Container(),
+                                      SizedBox(width: 5.0,),
+                                      Filtreproducts[index].nbmagasin!=null?
+                                      Text(Filtreproducts[index].nbmagasin+" Magasin",style:TextStyle(fontSize:12,color:kPrimaryColor)):Container(),
+                                      SizedBox(width: 5.0,),
+                                      Filtreproducts[index].nbhall!=null?
+                                      Text(Filtreproducts[index].nbhall+" Hall",style:TextStyle(fontSize:12,color:kPrimaryColor)):Container(),
+                                    ],
+                                  ):Container(),
                                   SizedBox(height: 8.0,),
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     children: <Widget>[
                                       Text(
-                                        produts[index].prix!=null? moneyFormat(Filtreproducts[index].prix)+" Fcfa ":'',
+                                        produts[index].prix!=null? Filtreproducts[index].prix+" Fcfa ":'',
                                         style: TextStyle(
                                             fontSize: 18.0,
                                             color: Colors.red,
