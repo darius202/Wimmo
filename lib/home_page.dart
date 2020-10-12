@@ -2,9 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:wimmobeta/constants.dart';
 import 'package:wimmobeta/databody.dart';
 import 'package:wimmobeta/recherche.dart';
-import 'package:wimmobeta/suggestion.dart';
-import 'package:wimmobeta/constants.dart';
-import 'package:wimmobeta/databody.dart';
 import 'package:wimmobeta/transition.dart';
 class HomePage extends StatefulWidget{
 
@@ -30,9 +27,6 @@ class _HomePage extends State<HomePage>{
       resizeToAvoidBottomInset: false,
       key: _scaffoldkey,
       appBar: AppBar(
-        leading: IconButton(
-          icon: Icon(Icons.menu, color: kPrimaryColor,),
-        ),
         backgroundColor: Colors.white,
         elevation: 0,
         title: Image.asset(

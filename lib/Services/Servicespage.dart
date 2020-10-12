@@ -5,7 +5,7 @@ import 'package:wimmobeta/product.dart';
 
 
 class GetProduct{
-  static const ROOT ='https://gerestock.com/immo/connectionClient.php';
+  static const ROOT ='https://afriqueimmobilier.net/immo/connectionClient.php';
   static Future<List<Product>> getProduct(String mandat,String type,String pays,String ville) async {
     try{
       var map= Map<String, dynamic>();
@@ -36,7 +36,7 @@ class GetProduct{
 }
 
 class Paysservices{
-  static const ROOT ='https://gerestock.com/immo/localisation.php';
+  static const ROOT ='https://afriqueimmobilier.net/immo/localisation.php';
   static const _GET_ALL_ACTION="GET_PAYS";
 
   static Future<List<Pays>> getPays() async {
@@ -65,7 +65,7 @@ class Paysservices{
 }
 
 class Villeservices{
-  static const ROOT ='https://gerestock.com/immo/localisation.php';
+  static const ROOT ='https://afriqueimmobilier.net/immo/localisation.php';
   static const _GET_VILE_ACTION= 'GET_VILLE';
 
   static Future<List<Ville>> getVille() async {
@@ -94,7 +94,7 @@ class Villeservices{
 }
 
 class Quartierservices{
-  static const ROOT ='https://gerestock.com/immo/localisation.php';
+  static const ROOT ='https://afriqueimmobilier.net/immo/localisation.php';
   static const _GET_QUARTIER_ACTION= 'GET_QUARTIER';
 
   static Future<List<Quartier>> getQuartier() async {
@@ -124,7 +124,7 @@ class Quartierservices{
 }
 
 class TypeBienservices{
-  static const ROOT ='https://gerestock.com/immo/localisation.php';
+  static const ROOT ='https://afriqueimmobilier.net/immo/localisation.php';
   static const _GET_QUARTIER_ACTION= 'GET_MANDAT';
 
   static Future<List<Mandat>> getMandat() async {
@@ -155,7 +155,7 @@ class TypeBienservices{
 
 
 class Situationservices{
-  static const ROOT ='https://gerestock.com/immo/localisation.php';
+  static const ROOT ='https://afriqueimmobilier.net/immo/localisation.php';
   static const _GET_QUARTIER_ACTION= 'GET_SITUATION';
 
   static Future<List<Situationadmin>> getSituationadmin() async {
@@ -184,7 +184,7 @@ class Situationservices{
 
 }
 class Bienservices{
-  static const ROOT ='https://gerestock.com/immo/localisation.php';
+  static const ROOT ='https://afriqueimmobilier.net/immo/localisation.php';
   static const _GET_QUARTIER_ACTION= 'GET_LOUER';
 
   static Future<List<Bienlouable>> getLouer() async {
@@ -215,7 +215,7 @@ class Bienservices{
 
 
 class Etageservices{
-  static const ROOT ='https://gerestock.com/immo/localisation.php';
+  static const ROOT ='https://afriqueimmobilier.net/immo/localisation.php';
   static const _GET_QUARTIER_ACTION= 'GET_ETAGE';
 
   static Future<List<Etage>> getEtage() async {
@@ -251,7 +251,7 @@ class SignalServices{
       map['idbien']= idbien;
       map['message']= message;
       map['contact']= contact;
-      final response = await http.post('https://gerestock.com/immo/signalbien.php',body:map);
+      final response = await http.post('https://afriqueimmobilier.net/immo/signalbien.php',body:map);
       print('Voici le message du body addProduit: ${response.body}');
       if(200 == response.statusCode){
         return response.body;
@@ -272,7 +272,7 @@ class SuggestionServices{
       var map= Map<String, dynamic>();
       map['message']= message;
       map['contact']= contact;
-      final response = await http.post('https://gerestock.com/immo/suggestion.php',body:map);
+      final response = await http.post('https://afriqueimmobilier.net/immo/suggestion.php',body:map);
       print('Voici le message du body addProduit: ${response.body}');
       if(200 == response.statusCode){
         return response.body;

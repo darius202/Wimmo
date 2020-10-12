@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:grouped_buttons/grouped_buttons.dart';
 import 'package:wimmobeta/Services/data.dart';
 import 'package:wimmobeta/Services/Servicespage.dart';
+import 'package:wimmobeta/appbar.dart';
 import 'package:wimmobeta/constants.dart';
 import 'package:wimmobeta/home_page.dart';
+import 'package:wimmobeta/navigationDrawer.dart';
 import 'package:wimmobeta/product.dart';
 import 'package:wimmobeta/transition.dart';
 
@@ -18,17 +20,11 @@ class Admin extends StatefulWidget {
 
 class _AdminState extends State<Admin> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
-  static const String parcelle = "Parcelle";
-  static const String villa = "Maison ou Villa";
-  static const String appartement = "Appartement";
-  static const String bureau = "Bureau ou Boutique";
 
   MaterialColor active = Colors.blue;
   MaterialColor notActive = Colors.grey;
   TextEditingController categoryController = TextEditingController();
   TextEditingController brandController = TextEditingController();
-  GlobalKey<FormState> _categoryFormKey = GlobalKey();
-  GlobalKey<FormState> _brandFormKey = GlobalKey();
   final GlobalKey<State> _keyLoader = new GlobalKey<State>();
 
 
@@ -107,20 +103,8 @@ class _AdminState extends State<Admin> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
-      appBar: AppBar(
-        leading: IconButton(
-          icon: Icon(Icons.menu, color: kPrimaryColor,),
-        ),
-        backgroundColor: Colors.white,
-        elevation: 0,
-        title: Image.asset(
-          'assets/image1.jpg',
-          fit: BoxFit.contain,
-          height: 400,
-          width: 190,
-        ),
-        centerTitle: true,
-      ),
+      drawer:navigationDrawer(),
+      appBar: buildAppBar(),
       body:DefaultTabController(
         length: 2,
         child: Builder(builder: (BuildContext context) {

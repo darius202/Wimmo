@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:wimmobeta/product.dart';
 class Photo extends StatefulWidget {
@@ -10,6 +11,7 @@ class Photo extends StatefulWidget {
 }
 
 class _PhotoState extends State<Photo> {
+  static const String lien ="https://afriqueimmobilier.net/immo/images/";
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -17,14 +19,31 @@ class _PhotoState extends State<Photo> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-               Image.network("https://gerestock.com/immo/images/"+widget.annonce.image1),
+            CachedNetworkImage(
+              imageUrl: lien+widget.annonce.image1,
+              progressIndicatorBuilder: (context, url, downloadProgress) =>
+                  CircularProgressIndicator(value: downloadProgress.progress),
+              errorWidget: (context, url, error) => Icon(Icons.error,color:Colors.red),
+            ),
+            CachedNetworkImage(
+              imageUrl: lien+widget.annonce.image2,
+              progressIndicatorBuilder: (context, url, downloadProgress) =>
+                  CircularProgressIndicator(value: downloadProgress.progress),
+              errorWidget: (context, url, error) => Icon(Icons.error,color:Colors.red),
+            ),
 
-          Image.network("https://gerestock.com/immo/images/"+widget.annonce.image2),
-
-            Image.network("https://gerestock.com/immo/images/"+widget.annonce.image3),
-
-             Image.network("https://gerestock.com/immo/images/"+widget.annonce.image4),
-
+            CachedNetworkImage(
+              imageUrl: lien+widget.annonce.image3,
+              progressIndicatorBuilder: (context, url, downloadProgress) =>
+                  CircularProgressIndicator(value: downloadProgress.progress),
+              errorWidget: (context, url, error) => Icon(Icons.error,color:Colors.red),
+            ),
+            CachedNetworkImage(
+              imageUrl: lien+widget.annonce.image4,
+              progressIndicatorBuilder: (context, url, downloadProgress) =>
+                  CircularProgressIndicator(value: downloadProgress.progress),
+              errorWidget: (context, url, error) => Icon(Icons.error,color:Colors.red),
+            ),
           ],
         ),
       ),

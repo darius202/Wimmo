@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_pro/carousel_pro.dart';
@@ -21,7 +22,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
   static const String villa = "Maison ou Villa";
   static const String appartement = "Appartement";
   static const String bureau = "Bureau ou Boutique";
-
+  static const String lien ="https://afriqueimmobilier.net/immo/images/";
   String moneyFormat(String price) {
     if (price.length > 2) {
       var value = price;
@@ -54,10 +55,30 @@ class _DetailsScreenState extends State<DetailsScreen> {
                   height: 200.0,
                   child: Carousel(
                     images: [
-                      NetworkImage(widget.annonce.image1.isNotEmpty?"https://gerestock.com/immo/images/"+widget.annonce.image1:"",),
-                      NetworkImage(widget.annonce.image2.isNotEmpty?"https://gerestock.com/immo/images/"+widget.annonce.image2:""),
-                      NetworkImage(widget.annonce.image3.isNotEmpty?"https://gerestock.com/immo/images/"+widget.annonce.image3:""),
-                      NetworkImage(widget.annonce.image4.isNotEmpty?"https://gerestock.com/immo/images/"+widget.annonce.image4:""),
+                      CachedNetworkImage(
+                        imageUrl: lien+ widget.annonce.image1,
+                        progressIndicatorBuilder: (context, url, downloadProgress) =>
+                            CircularProgressIndicator(value: downloadProgress.progress),
+                        errorWidget: (context, url, error) => Icon(Icons.error,color:Colors.red),
+                      ),
+                      CachedNetworkImage(
+                        imageUrl: lien+ widget.annonce.image2,
+                        progressIndicatorBuilder: (context, url, downloadProgress) =>
+                            CircularProgressIndicator(value: downloadProgress.progress),
+                        errorWidget: (context, url, error) => Icon(Icons.error,color:Colors.red),
+                      ),
+                      CachedNetworkImage(
+                        imageUrl: lien+ widget.annonce.image3,
+                        progressIndicatorBuilder: (context, url, downloadProgress) =>
+                            CircularProgressIndicator(value: downloadProgress.progress),
+                        errorWidget: (context, url, error) => Icon(Icons.error,color:Colors.red),
+                      ),
+                      CachedNetworkImage(
+                        imageUrl: lien+ widget.annonce.image4,
+                        progressIndicatorBuilder: (context, url, downloadProgress) =>
+                            CircularProgressIndicator(value: downloadProgress.progress),
+                        errorWidget: (context, url, error) => Icon(Icons.error,color:Colors.red),
+                      ),
                     ],
                     dotSize: 6.0,
                     dotSpacing: 15.0,
@@ -121,7 +142,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                         Text(
                           widget.annonce.type_bien !=null? widget.annonce.type_bien +" à "+widget.annonce.ville+"  ("+widget.annonce.type_mandat+")" :'',
                           style: TextStyle(
-                              fontSize: 18.0,
+                              fontSize: 16.0,
                               color:kPrimaryColor,
                               fontWeight: FontWeight.bold
                           ),
@@ -149,7 +170,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
                         Text(
-                          widget.annonce.prix!=null?widget.annonce.prix+" Fcfa":'',
+                          widget.annonce.prix!=null?moneyFormat(widget.annonce.prix)+" Fcfa":'',
                           style: TextStyle(
                               fontSize: 20.0,
                               color: Colors.red,
@@ -199,22 +220,26 @@ class _DetailsScreenState extends State<DetailsScreen> {
                 Image.asset("assets/dim.png",
                   height: 40,):Container(),
                 SizedBox(width: 5.0,),
-                Text(widget.annonce.superficie+" m2",style:TextStyle(color:kTextLigthtColor,fontWeight: FontWeight.bold,)),
+                widget.annonce.superficie.isNotEmpty?
+                Text(widget.annonce.superficie+" m2",style:TextStyle(color:kTextLigthtColor,
+                  fontWeight: FontWeight.bold,)):Container(),
                 SizedBox(width: 20.0,),
                 widget.annonce.situationadministrative.isNotEmpty?
                 Image.asset("assets/admi.png",):Container(),
                 SizedBox(width: 5.0,),
-                Text(widget.annonce.situationadministrative,style:TextStyle(color:kTextLigthtColor,fontWeight: FontWeight.bold,)),
+                widget.annonce.situationadministrative.isNotEmpty?
+                Text(widget.annonce.situationadministrative,style:TextStyle(color:kTextLigthtColor,
+                  fontWeight: FontWeight.bold,)):Container(),
               ],
             ),
             SizedBox(height: 8.0,),
             Container(
-              margin: EdgeInsets.only(left:20.0,right: 20.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Flexible(
                     child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Icon(Icons.location_on,),
                       Text(
@@ -241,22 +266,26 @@ class _DetailsScreenState extends State<DetailsScreen> {
                             fontStyle: FontStyle.normal
                         ),
                       ),
-                      SizedBox(width: 5.0,),
-                      Icon(Icons.phone,),
-                      SizedBox(width: 5.0,),
-                      Text(
-                        widget.annonce.admincontact!=null?  widget.annonce.admincontact:'',
-                        style: TextStyle(
-                            color:kTextLigthtColor,
-                            fontWeight: FontWeight.bold,
-                            fontStyle: FontStyle.normal
-                        ),
-                      ),
                     ],
                   ),
                   ),
                 ],
               ),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Icon(Icons.phone,),
+                SizedBox(width: 5.0,),
+                Text(
+                  widget.annonce.admincontact!=null?  widget.annonce.admincontact:'',
+                  style: TextStyle(
+                      color:kTextLigthtColor,
+                      fontWeight: FontWeight.bold,
+                      fontStyle: FontStyle.normal
+                  ),
+                ),
+              ],
             ),
             SizedBox(height: 8.0,),
             Row(
@@ -294,8 +323,23 @@ class _DetailsScreenState extends State<DetailsScreen> {
               ),
               child: FlatButton(
                 onPressed: (){
-                  launchWhatsApp(widget.annonce.admincontact,"Annonce wimmobeta \n\n"+widget.annonce.intitule_bien+" \nLocalisation: "+widget.annonce.pays+"-"+widget.annonce.ville+"-"+widget.annonce.quartier
-                      +"\nType du bien: "+widget.annonce.type_bien+"\n"+"prix: "+widget.annonce.prix+" "+widget.annonce.negoce+"\n\nPrêt pour les négociations"+"\n https://gerestock.com/immo/images/"+ widget.annonce.image1);
+                  if(widget.annonce.image1.isNotEmpty){
+                    launchWhatsApp(widget.annonce.admincontact,"Annonce Wimmo \n\n"+widget.annonce.intitule_bien+" \nLocalisation: "+widget.annonce.pays+"-"+widget.annonce.ville+"-"+widget.annonce.quartier
+                        +"\nType du bien: "+widget.annonce.type_bien+"\n"+"prix: "+widget.annonce.prix+" "+widget.annonce.negoce+"\n\nPrêt pour les négociations"+"\n"+lien+ widget.annonce.image1);
+                  }
+                  else if(widget.annonce.image2.isNotEmpty){
+                    launchWhatsApp(widget.annonce.admincontact,"Annonce Wimmo \n\n"+widget.annonce.intitule_bien+" \nLocalisation: "+widget.annonce.pays+"-"+widget.annonce.ville+"-"+widget.annonce.quartier
+                        +"\nType du bien: "+widget.annonce.type_bien+"\n"+"prix: "+widget.annonce.prix+" "+widget.annonce.negoce+"\n\nPrêt pour les négociations"+"\n"+lien+ widget.annonce.image2);
+                  }else if(widget.annonce.image3.isNotEmpty){
+                    launchWhatsApp(widget.annonce.admincontact,"Annonce Wimmo \n\n"+widget.annonce.intitule_bien+" \nLocalisation: "+widget.annonce.pays+"-"+widget.annonce.ville+"-"+widget.annonce.quartier
+                        +"\nType du bien: "+widget.annonce.type_bien+"\n"+"prix: "+widget.annonce.prix+" "+widget.annonce.negoce+"\n\nPrêt pour les négociations"+"\n"+lien+ widget.annonce.image3);
+                  }else if(widget.annonce.image4.isNotEmpty){
+                    launchWhatsApp(widget.annonce.admincontact,"Annonce Wimmo \n\n"+widget.annonce.intitule_bien+" \nLocalisation: "+widget.annonce.pays+"-"+widget.annonce.ville+"-"+widget.annonce.quartier
+                        +"\nType du bien: "+widget.annonce.type_bien+"\n"+"prix: "+widget.annonce.prix+" "+widget.annonce.negoce+"\n\nPrêt pour les négociations"+"\n"+lien+ widget.annonce.image4);
+                  }else{
+                    launchWhatsApp(widget.annonce.admincontact,"Annonce Wimmo \n\n"+widget.annonce.intitule_bien+" \nLocalisation: "+widget.annonce.pays+"-"+widget.annonce.ville+"-"+widget.annonce.quartier
+                        +"\nType du bien: "+widget.annonce.type_bien+"\n"+"prix: "+widget.annonce.prix+" "+widget.annonce.negoce+"\n\nPrêt pour les négociations"+"\nAucune image");
+                  }
                 },
                 child: Text("CONTACTER",
                   style: TextStyle(color: Colors.white, fontSize: 18,fontFamily: "Monteserrat"),),
@@ -314,7 +358,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                   ]
               ),
             ),
-            SizedBox(height: 10.0,),
+            SizedBox(height: 30.0,),
           ],
         );
         break;
@@ -329,13 +373,15 @@ class _DetailsScreenState extends State<DetailsScreen> {
                   height: 40,):Container(),
                 SizedBox(width: 5.0,),
                 widget.annonce.superficie.isNotEmpty?
-                Text(widget.annonce.superficie+" m2",style:TextStyle(color:kTextLigthtColor,fontWeight: FontWeight.bold,)):Container(),
+                Text(widget.annonce.superficie+" m2",style:TextStyle(color:kTextLigthtColor,
+                  fontWeight: FontWeight.bold,)):Container(),
                 SizedBox(width: 20.0,),
                 widget.annonce.situationadministrative.isNotEmpty?
                 Image.asset("assets/admi.png",):Container(),
                 SizedBox(width: 5.0,),
                 widget.annonce.situationadministrative.isNotEmpty?
-                Text(widget.annonce.situationadministrative,style:TextStyle(color:kTextLigthtColor,fontWeight: FontWeight.bold,)):Container(),
+                Text(widget.annonce.situationadministrative,style:TextStyle(color:kTextLigthtColor,
+                  fontWeight: FontWeight.bold,)):Container(),
               ],
             ),
             SizedBox(height: 8.0,),
@@ -360,10 +406,10 @@ class _DetailsScreenState extends State<DetailsScreen> {
                 widget.annonce.nbcuisine.isNotEmpty?
                 Text(widget.annonce.nbcuisine+" cuisine",style: TextStyle(color:kTextLigthtColor,fontWeight: FontWeight.bold),):Container(),
                 SizedBox(width: 5.0,),
-                widget.annonce.nbcuisine.isNotEmpty?
+                widget.annonce.nbsalledebain.isNotEmpty?
                 Image.asset('assets/bain.png',fit: BoxFit.cover,):Container(),
                 SizedBox(width: 5.0,),
-                widget.annonce.nbcuisine.isNotEmpty?
+                widget.annonce.nbsalledebain.isNotEmpty?
                 Text(widget.annonce.nbsalledebain+" douche",style: TextStyle(color:kTextLigthtColor,fontWeight: FontWeight.bold),):Container(),
               ],
             ),
@@ -373,13 +419,13 @@ class _DetailsScreenState extends State<DetailsScreen> {
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
                 SizedBox(width: MediaQuery.of(context).size.width/4,),
-                widget.annonce.nbboutique!=null?
+                widget.annonce.nbboutique.isNotEmpty?
                 Text(widget.annonce.nbboutique+" Boutique",style:TextStyle(color:kPrimaryColor,fontWeight: FontWeight.bold)):Container(),
                 SizedBox(width: 5.0,),
-                widget.annonce.nbmagasin!=null?
+                widget.annonce.nbmagasin.isNotEmpty?
                 Text(widget.annonce.nbmagasin+" Magasin",style:TextStyle(color:kPrimaryColor,fontWeight: FontWeight.bold)):Container(),
                 SizedBox(width: 5.0,),
-                widget.annonce.nbhall!=null?
+                widget.annonce.nbhall.isNotEmpty?
                 Text(widget.annonce.nbhall+" Hall",style:TextStyle(color:kPrimaryColor,fontWeight: FontWeight.bold)):Container(),
               ],
             ):Container(),
@@ -412,7 +458,11 @@ class _DetailsScreenState extends State<DetailsScreen> {
                       fontStyle: FontStyle.normal
                   ),
                 ),
-                SizedBox(width: 5.0,),
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
                 Icon(Icons.phone,),
                 SizedBox(width: 5.0,),
                 Text(
@@ -553,8 +603,23 @@ class _DetailsScreenState extends State<DetailsScreen> {
               ),
               child: FlatButton(
                 onPressed: (){
-                  launchWhatsApp(widget.annonce.admincontact,"Annonce wimmobeta \n\n"+widget.annonce.intitule_bien+" \nLocalisation: "+widget.annonce.pays+"-"+widget.annonce.ville+"-"+widget.annonce.quartier
-                      +"\nType du bien: "+widget.annonce.type_bien+"\n"+"prix: "+widget.annonce.prix+" "+widget.annonce.negoce+"\n\nPrêt pour les négociations"+"\n https://gerestock.com/immo/images/"+ widget.annonce.image1);
+                  if(widget.annonce.image1.isNotEmpty){
+                    launchWhatsApp(widget.annonce.admincontact,"Annonce Wimmo \n\n"+widget.annonce.intitule_bien+" \nLocalisation: "+widget.annonce.pays+"-"+widget.annonce.ville+"-"+widget.annonce.quartier
+                        +"\nType du bien: "+widget.annonce.type_bien+"\n"+"prix: "+widget.annonce.prix+" "+widget.annonce.negoce+"\n\nPrêt pour les négociations"+"\n "+lien+ widget.annonce.image1);
+                  }
+                  else if(widget.annonce.image2.isNotEmpty){
+                    launchWhatsApp(widget.annonce.admincontact,"Annonce Wimmo \n\n"+widget.annonce.intitule_bien+" \nLocalisation: "+widget.annonce.pays+"-"+widget.annonce.ville+"-"+widget.annonce.quartier
+                        +"\nType du bien: "+widget.annonce.type_bien+"\n"+"prix: "+widget.annonce.prix+" "+widget.annonce.negoce+"\n\nPrêt pour les négociations"+"\n"+lien+ widget.annonce.image2);
+                  }else if(widget.annonce.image3.isNotEmpty){
+                    launchWhatsApp(widget.annonce.admincontact,"Annonce Wimmo \n\n"+widget.annonce.intitule_bien+" \nLocalisation: "+widget.annonce.pays+"-"+widget.annonce.ville+"-"+widget.annonce.quartier
+                        +"\nType du bien: "+widget.annonce.type_bien+"\n"+"prix: "+widget.annonce.prix+" "+widget.annonce.negoce+"\n\nPrêt pour les négociations"+"\n"+lien+ widget.annonce.image3);
+                  }else if(widget.annonce.image4.isNotEmpty){
+                    launchWhatsApp(widget.annonce.admincontact,"Annonce Wimmo \n\n"+widget.annonce.intitule_bien+" \nLocalisation: "+widget.annonce.pays+"-"+widget.annonce.ville+"-"+widget.annonce.quartier
+                        +"\nType du bien: "+widget.annonce.type_bien+"\n"+"prix: "+widget.annonce.prix+" "+widget.annonce.negoce+"\n\nPrêt pour les négociations"+"\n"+lien+ widget.annonce.image4);
+                  }else{
+                    launchWhatsApp(widget.annonce.admincontact,"Annonce Wimmo \n\n"+widget.annonce.intitule_bien+" \nLocalisation: "+widget.annonce.pays+"-"+widget.annonce.ville+"-"+widget.annonce.quartier
+                        +"\nType du bien: "+widget.annonce.type_bien+"\n"+"prix: "+widget.annonce.prix+" "+widget.annonce.negoce+"\n\nPrêt pour les négociations"+"\nAucune image");
+                  }
                 },
                 child: Text("CONTACTER",
                   style: TextStyle(color: Colors.white, fontSize: 18,fontFamily: "Monteserrat"),),
@@ -589,35 +654,48 @@ class _DetailsScreenState extends State<DetailsScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
+                widget.annonce.superficie.isNotEmpty?
                 Image.asset("assets/dim.png",
-                  height: 40,),
+                  height: 40,):Container(),
                 SizedBox(width: 5.0,),
-                Text(widget.annonce.superficie+" m2",style:TextStyle(color:kTextLigthtColor,fontWeight: FontWeight.bold,)),
+                widget.annonce.superficie.isNotEmpty?
+                Text(widget.annonce.superficie+" m2",style:TextStyle(color:kTextLigthtColor,fontWeight: FontWeight.bold,)):Container(),
                 SizedBox(width: 20.0,),
-                Image.asset("assets/admi.png",),
+                widget.annonce.situationadministrative.isNotEmpty?
+                Image.asset("assets/admi.png",):Container(),
                 SizedBox(width: 5.0,),
-                Text(widget.annonce.situationadministrative,style:TextStyle(color:kTextLigthtColor,fontWeight: FontWeight.bold,)),
+                widget.annonce.situationadministrative.isNotEmpty?
+                Text(widget.annonce.situationadministrative,style:TextStyle(color:kTextLigthtColor,fontWeight: FontWeight.bold,)):Container(),
               ],
             ),
             SizedBox(height: 8.0,),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                Image.asset('assets/salon.png',fit: BoxFit.cover,),
+                widget.annonce.nbsalon.isNotEmpty?
+                Image.asset('assets/salon.png',fit: BoxFit.cover,):Container(),
                 SizedBox(width: 5.0,),
-                Text(widget.annonce.nbsalon+" salon",style: TextStyle(color:kTextLigthtColor,fontWeight: FontWeight.bold),),
+                widget.annonce.nbsalon.isNotEmpty?
+                Text(widget.annonce.nbsalon+" salon",style: TextStyle(color:kTextLigthtColor,fontWeight: FontWeight.bold),):Container(),
                 SizedBox(width: 8.0,),
-                Image.asset('assets/chambre.png',fit: BoxFit.cover,),
+                widget.annonce.nbchambre.isNotEmpty?
+                Image.asset('assets/chambre.png',fit: BoxFit.cover,):Container(),
                 SizedBox(width: 5.0,),
-                Text(widget.annonce.nbchambre+" chambre",style: TextStyle(color:kTextLigthtColor,fontWeight: FontWeight.bold),),
+                widget.annonce.nbchambre.isNotEmpty?
+                Text(widget.annonce.nbchambre+" chambre",style: TextStyle(color:kTextLigthtColor,
+                    fontWeight: FontWeight.bold),):Container(),
                 SizedBox(width: 5.0,),
-                Image.asset('assets/cuisine.png',fit: BoxFit.cover,),
+                widget.annonce.nbcuisine.isNotEmpty?
+                Image.asset('assets/cuisine.png',fit: BoxFit.cover,):Container(),
                 SizedBox(width: 5.0,),
-                Text(widget.annonce.nbcuisine+" cuisine",style: TextStyle(color:kTextLigthtColor,fontWeight: FontWeight.bold),),
+                widget.annonce.nbcuisine.isNotEmpty?
+                Text(widget.annonce.nbcuisine+" cuisine",style: TextStyle(color:kTextLigthtColor,fontWeight: FontWeight.bold),):Container(),
                 SizedBox(width: 5.0,),
-                Image.asset('assets/bain.png',fit: BoxFit.cover,),
+                widget.annonce.nbsalledebain.isNotEmpty?
+                Image.asset('assets/bain.png',fit: BoxFit.cover,):Container(),
                 SizedBox(width: 5.0,),
-                Text(widget.annonce.nbsalledebain+" douche",style: TextStyle(color:kTextLigthtColor,fontWeight: FontWeight.bold),),
+                widget.annonce.nbsalledebain.isNotEmpty?
+                Text(widget.annonce.nbsalledebain+" douche",style: TextStyle(color:kTextLigthtColor,fontWeight: FontWeight.bold),):Container(),
               ],
             ),
             SizedBox(height: 8.0,),
@@ -649,7 +727,11 @@ class _DetailsScreenState extends State<DetailsScreen> {
                       fontStyle: FontStyle.normal
                   ),
                 ),
-                SizedBox(width: 5.0,),
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
                 Icon(Icons.phone,),
                 SizedBox(width: 5.0,),
                 Text(
@@ -792,8 +874,23 @@ class _DetailsScreenState extends State<DetailsScreen> {
               ),
               child: FlatButton(
                 onPressed: (){
-                  launchWhatsApp(widget.annonce.admincontact,"Annonce wimmobeta \n\n"+widget.annonce.intitule_bien+" \nLocalisation: "+widget.annonce.pays+"-"+widget.annonce.ville+"-"+widget.annonce.quartier
-                      +"\nType du bien: "+widget.annonce.type_bien+"\n"+"prix: "+widget.annonce.prix+" "+widget.annonce.negoce+"\n\nPrêt pour les négociations"+"\n https://gerestock.com/immo/images/"+ widget.annonce.image1);
+                  if(widget.annonce.image1.isNotEmpty){
+                    launchWhatsApp(widget.annonce.admincontact,"Annonce Wimmo \n\n"+widget.annonce.intitule_bien+" \nLocalisation: "+widget.annonce.pays+"-"+widget.annonce.ville+"-"+widget.annonce.quartier
+                        +"\nType du bien: "+widget.annonce.type_bien+"\n"+"prix: "+widget.annonce.prix+" "+widget.annonce.negoce+"\n\nPrêt pour les négociations"+"\n"+lien+ widget.annonce.image1);
+                  }
+                  else if(widget.annonce.image2.isNotEmpty){
+                    launchWhatsApp(widget.annonce.admincontact,"Annonce Wimmo \n\n"+widget.annonce.intitule_bien+" \nLocalisation: "+widget.annonce.pays+"-"+widget.annonce.ville+"-"+widget.annonce.quartier
+                        +"\nType du bien: "+widget.annonce.type_bien+"\n"+"prix: "+widget.annonce.prix+" "+widget.annonce.negoce+"\n\nPrêt pour les négociations"+"\n"+lien+ widget.annonce.image2);
+                  }else if(widget.annonce.image3.isNotEmpty){
+                    launchWhatsApp(widget.annonce.admincontact,"Annonce Wimmo \n\n"+widget.annonce.intitule_bien+" \nLocalisation: "+widget.annonce.pays+"-"+widget.annonce.ville+"-"+widget.annonce.quartier
+                        +"\nType du bien: "+widget.annonce.type_bien+"\n"+"prix: "+widget.annonce.prix+" "+widget.annonce.negoce+"\n\nPrêt pour les négociations"+"\n"+lien+ widget.annonce.image3);
+                  }else if(widget.annonce.image4.isNotEmpty){
+                    launchWhatsApp(widget.annonce.admincontact,"Annonce Wimmo \n\n"+widget.annonce.intitule_bien+" \nLocalisation: "+widget.annonce.pays+"-"+widget.annonce.ville+"-"+widget.annonce.quartier
+                        +"\nType du bien: "+widget.annonce.type_bien+"\n"+"prix: "+widget.annonce.prix+" "+widget.annonce.negoce+"\n\nPrêt pour les négociations"+"\n"+lien+ widget.annonce.image4);
+                  }else{
+                    launchWhatsApp(widget.annonce.admincontact,"Annonce Wimmo \n\n"+widget.annonce.intitule_bien+" \nLocalisation: "+widget.annonce.pays+"-"+widget.annonce.ville+"-"+widget.annonce.quartier
+                        +"\nType du bien: "+widget.annonce.type_bien+"\n"+"prix: "+widget.annonce.prix+" "+widget.annonce.negoce+"\n\nPrêt pour les négociations"+"\nAucune image");
+                  }
                 },
                 child: Text("CONTACTER",
                   style: TextStyle(color: Colors.white, fontSize: 18,fontFamily: "Monteserrat"),),
@@ -822,14 +919,18 @@ class _DetailsScreenState extends State<DetailsScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
+                widget.annonce.superficie.isNotEmpty?
                 Image.asset("assets/dim.png",
-                  height: 40,),
+                  height: 40,):Container(),
                 SizedBox(width: 5.0,),
-                Text(widget.annonce.superficie+" m2",style:TextStyle(color:kTextLigthtColor,fontWeight: FontWeight.bold,)),
+                widget.annonce.superficie.isNotEmpty?
+                Text(widget.annonce.superficie+" m2",style:TextStyle(color:kTextLigthtColor,fontWeight: FontWeight.bold,)):Container(),
                 SizedBox(width: 20.0,),
-                Image.asset("assets/admi.png",),
+                widget.annonce.situationadministrative.isNotEmpty?
+                Image.asset("assets/admi.png",):Container(),
                 SizedBox(width: 5.0,),
-                Text(widget.annonce.situationadministrative,style:TextStyle(color:kTextLigthtColor,fontWeight: FontWeight.bold,)),
+                widget.annonce.situationadministrative.isNotEmpty?
+                Text(widget.annonce.situationadministrative,style:TextStyle(color:kTextLigthtColor,fontWeight: FontWeight.bold,)):Container(),
               ],
             ),
             SizedBox(height: 8.0,),
@@ -839,22 +940,28 @@ class _DetailsScreenState extends State<DetailsScreen> {
                 widget.annonce.nbsalon.isNotEmpty?
                 Image.asset('assets/salon.png',fit: BoxFit.cover,):Container(),
                 SizedBox(width: 5.0,),
-                Text(widget.annonce.nbsalon+" salon",style: TextStyle(color:kTextLigthtColor,fontWeight: FontWeight.bold),),
+                widget.annonce.nbsalon.isNotEmpty?
+                Text(widget.annonce.nbsalon+" salon",style: TextStyle(color:kTextLigthtColor,fontWeight: FontWeight.bold),):Container(),
                 SizedBox(width: 8.0,),
                 widget.annonce.nbchambre.isNotEmpty?
                 Image.asset('assets/chambre.png',fit: BoxFit.cover,):Container(),
                 SizedBox(width: 5.0,),
-                Text(widget.annonce.nbchambre+" chambre",style: TextStyle(color:kTextLigthtColor,fontWeight: FontWeight.bold),),
+                widget.annonce.nbchambre.isNotEmpty?
+                Text(widget.annonce.nbchambre+" chambre",style: TextStyle(color:kTextLigthtColor,fontWeight: FontWeight.bold),):Container(),
                 SizedBox(width: 5.0,),
                 widget.annonce.nbcuisine.isNotEmpty?
                 Image.asset('assets/cuisine.png',fit: BoxFit.cover,):Container(),
                 SizedBox(width: 5.0,),
-                Text(widget.annonce.nbcuisine+" cuisine",style: TextStyle(color:kTextLigthtColor,fontWeight: FontWeight.bold),),
+                widget.annonce.nbcuisine.isNotEmpty?
+                Text(widget.annonce.nbcuisine+" cuisine",style: TextStyle(color:kTextLigthtColor,
+                    fontWeight: FontWeight.bold),):Container(),
                 SizedBox(width: 5.0,),
                 widget.annonce.nbsalledebain.isNotEmpty?
                 Image.asset('assets/bain.png',fit: BoxFit.cover,):Container(),
                 SizedBox(width: 5.0,),
-                Text(widget.annonce.nbsalledebain+" douche",style: TextStyle(color:kTextLigthtColor,fontWeight: FontWeight.bold),),
+                widget.annonce.nbsalledebain.isNotEmpty?
+                Text(widget.annonce.nbsalledebain+" douche",style: TextStyle(color:kTextLigthtColor,
+                    fontWeight: FontWeight.bold),):Container(),
               ],
             ),
             SizedBox(height: 8.0,),
@@ -863,13 +970,13 @@ class _DetailsScreenState extends State<DetailsScreen> {
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
                 SizedBox(width: MediaQuery.of(context).size.width/4,),
-                widget.annonce.nbboutique!=null?
+                widget.annonce.nbboutique.isNotEmpty?
                 Text(widget.annonce.nbboutique+" Boutique",style:TextStyle(color:kPrimaryColor,fontWeight: FontWeight.bold)):Container(),
                 SizedBox(width: 5.0,),
-                widget.annonce.nbmagasin!=null?
+                widget.annonce.nbmagasin.isNotEmpty?
                 Text(widget.annonce.nbmagasin+" Magasin",style:TextStyle(color:kPrimaryColor,fontWeight: FontWeight.bold)):Container(),
                 SizedBox(width: 5.0,),
-                widget.annonce.nbhall!=null?
+                widget.annonce.nbhall.isNotEmpty?
                 Text(widget.annonce.nbhall+" Hall",style:TextStyle(color:kPrimaryColor,fontWeight: FontWeight.bold)):Container(),
               ],
             ):Container(),
@@ -902,7 +1009,11 @@ class _DetailsScreenState extends State<DetailsScreen> {
                       fontStyle: FontStyle.normal
                   ),
                 ),
-                SizedBox(width: 5.0,),
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
                 Icon(Icons.phone,),
                 SizedBox(width: 5.0,),
                 Text(
@@ -1046,8 +1157,23 @@ class _DetailsScreenState extends State<DetailsScreen> {
               ),
               child: FlatButton(
                 onPressed: (){
-                  launchWhatsApp(widget.annonce.admincontact,"Annonce wimmobeta \n\n"+widget.annonce.intitule_bien+" \nLocalisation: "+widget.annonce.pays+"-"+widget.annonce.ville+"-"+widget.annonce.quartier
-                      +"\nType du bien: "+widget.annonce.type_bien+"\n"+"prix: "+widget.annonce.prix+" "+widget.annonce.negoce+"\n\nPrêt pour les négociations"+"\n https://gerestock.com/immo/images/"+ widget.annonce.image1);
+                  if(widget.annonce.image1.isNotEmpty){
+                    launchWhatsApp(widget.annonce.admincontact,"Annonce Wimmo \n\n"+widget.annonce.intitule_bien+" \nLocalisation: "+widget.annonce.pays+"-"+widget.annonce.ville+"-"+widget.annonce.quartier
+                        +"\nType du bien: "+widget.annonce.type_bien+"\n"+"prix: "+widget.annonce.prix+" "+widget.annonce.negoce+"\n\nPrêt pour les négociations"+"\n"+lien+ widget.annonce.image1);
+                  }
+                  else if(widget.annonce.image2.isNotEmpty){
+                    launchWhatsApp(widget.annonce.admincontact,"Annonce Wimmo \n\n"+widget.annonce.intitule_bien+" \nLocalisation: "+widget.annonce.pays+"-"+widget.annonce.ville+"-"+widget.annonce.quartier
+                        +"\nType du bien: "+widget.annonce.type_bien+"\n"+"prix: "+widget.annonce.prix+" "+widget.annonce.negoce+"\n\nPrêt pour les négociations"+"\n"+lien+ widget.annonce.image2);
+                  }else if(widget.annonce.image3.isNotEmpty){
+                    launchWhatsApp(widget.annonce.admincontact,"Annonce Wimmo \n\n"+widget.annonce.intitule_bien+" \nLocalisation: "+widget.annonce.pays+"-"+widget.annonce.ville+"-"+widget.annonce.quartier
+                        +"\nType du bien: "+widget.annonce.type_bien+"\n"+"prix: "+widget.annonce.prix+" "+widget.annonce.negoce+"\n\nPrêt pour les négociations"+"\n"+lien+ widget.annonce.image3);
+                  }else if(widget.annonce.image4.isNotEmpty){
+                    launchWhatsApp(widget.annonce.admincontact,"Annonce Wimmo \n\n"+widget.annonce.intitule_bien+" \nLocalisation: "+widget.annonce.pays+"-"+widget.annonce.ville+"-"+widget.annonce.quartier
+                        +"\nType du bien: "+widget.annonce.type_bien+"\n"+"prix: "+widget.annonce.prix+" "+widget.annonce.negoce+"\n\nPrêt pour les négociations"+"\n"+lien+ widget.annonce.image4);
+                  }else{
+                    launchWhatsApp(widget.annonce.admincontact,"Annonce Wimmo \n\n"+widget.annonce.intitule_bien+" \nLocalisation: "+widget.annonce.pays+"-"+widget.annonce.ville+"-"+widget.annonce.quartier
+                        +"\nType du bien: "+widget.annonce.type_bien+"\n"+"prix: "+widget.annonce.prix+" "+widget.annonce.negoce+"\n\nPrêt pour les négociations"+"\nAucune image");
+                  }
                 },
                 child: Text("CONTACTER",
                   style: TextStyle(color: Colors.white, fontSize: 18,fontFamily: "Monteserrat"),),
@@ -1076,27 +1202,39 @@ class _DetailsScreenState extends State<DetailsScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
+                widget.annonce.superficie.isNotEmpty?
                 Image.asset("assets/dim.png",
-                  height: 40,),
+                  height: 40,):Container(),
                 SizedBox(width: 5.0,),
-                Text(widget.annonce.superficie+" m2",style:TextStyle(color:kTextLigthtColor,fontWeight: FontWeight.bold,)),
+                widget.annonce.superficie.isNotEmpty?
+                Text(widget.annonce.superficie+" m2",style:TextStyle(color:kTextLigthtColor,
+                  fontWeight: FontWeight.bold,)):Container(),
                 SizedBox(width: 20.0,),
-                Image.asset("assets/admi.png",),
+                widget.annonce.situationadministrative.isNotEmpty?
+                Image.asset("assets/admi.png",):Container(),
                 SizedBox(width: 5.0,),
-                Text(widget.annonce.situationadministrative,style:TextStyle(color:kTextLigthtColor,fontWeight: FontWeight.bold,)),
+                widget.annonce.situationadministrative.isNotEmpty?
+                Text(widget.annonce.situationadministrative,style:TextStyle(color:kTextLigthtColor,
+                  fontWeight: FontWeight.bold,)):Container(),
               ],
             ),
             SizedBox(height: 8.0,),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                Image.asset('assets/chambre.png',fit: BoxFit.cover,),
+                widget.annonce.nbchambre.isNotEmpty?
+                Image.asset('assets/chambre.png',fit: BoxFit.cover,):Container(),
                 SizedBox(width: 5.0,),
-                Text(widget.annonce.nbchambre+" pièce",style: TextStyle(color:kTextLigthtColor,fontWeight: FontWeight.bold),),
+                widget.annonce.nbchambre.isNotEmpty?
+                Text(widget.annonce.nbchambre+" pièce",style: TextStyle(color:kTextLigthtColor,fontWeight:
+                FontWeight.bold),):Container(),
                 SizedBox(width: 5.0,),
-                Image.asset('assets/bain.png',fit: BoxFit.cover,),
+                widget.annonce.nbsalledebain.isNotEmpty?
+                Image.asset('assets/bain.png',fit: BoxFit.cover,):Container(),
                 SizedBox(width: 5.0,),
-                Text(widget.annonce.nbsalledebain+" douche",style: TextStyle(color:kTextLigthtColor,fontWeight: FontWeight.bold),),
+                widget.annonce.nbsalledebain.isNotEmpty?
+                Text(widget.annonce.nbsalledebain+" douche",style: TextStyle(color:kTextLigthtColor,
+                    fontWeight: FontWeight.bold),):Container(),
               ],
             ),
             SizedBox(height: 8.0,),
@@ -1128,7 +1266,11 @@ class _DetailsScreenState extends State<DetailsScreen> {
                       fontStyle: FontStyle.normal
                   ),
                 ),
-                SizedBox(width: 5.0,),
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
                 Icon(Icons.phone,),
                 SizedBox(width: 5.0,),
                 Text(
@@ -1251,10 +1393,25 @@ class _DetailsScreenState extends State<DetailsScreen> {
               decoration: new BoxDecoration(
                 color: kPrimaryColor,
               ),
-              child: FlatButton(
+              child:FlatButton(
                 onPressed: (){
-                  launchWhatsApp(widget.annonce.admincontact,"Annonce wimmobeta \n\n"+widget.annonce.intitule_bien+" \nLocalisation: "+widget.annonce.pays+"-"+widget.annonce.ville+"-"+widget.annonce.quartier
-                      +"\nType du bien: "+widget.annonce.type_bien+"\n"+"prix: "+widget.annonce.prix+" "+widget.annonce.negoce+"\n\nPrêt pour les négociations"+"\n https://gerestock.com/immo/images/"+ widget.annonce.image1);
+                  if(widget.annonce.image1.isNotEmpty){
+                    launchWhatsApp(widget.annonce.admincontact,"Annonce Wimmo \n\n"+widget.annonce.intitule_bien+" \nLocalisation: "+widget.annonce.pays+"-"+widget.annonce.ville+"-"+widget.annonce.quartier
+                        +"\nType du bien: "+widget.annonce.type_bien+"\n"+"prix: "+widget.annonce.prix+" "+widget.annonce.negoce+"\n\nPrêt pour les négociations"+"\n"+lien+ widget.annonce.image1);
+                  }
+                  else if(widget.annonce.image2.isNotEmpty){
+                    launchWhatsApp(widget.annonce.admincontact,"Annonce Wimmo \n\n"+widget.annonce.intitule_bien+" \nLocalisation: "+widget.annonce.pays+"-"+widget.annonce.ville+"-"+widget.annonce.quartier
+                        +"\nType du bien: "+widget.annonce.type_bien+"\n"+"prix: "+widget.annonce.prix+" "+widget.annonce.negoce+"\n\nPrêt pour les négociations"+"\n"+lien+ widget.annonce.image2);
+                  }else if(widget.annonce.image3.isNotEmpty){
+                    launchWhatsApp(widget.annonce.admincontact,"Annonce Wimmo \n\n"+widget.annonce.intitule_bien+" \nLocalisation: "+widget.annonce.pays+"-"+widget.annonce.ville+"-"+widget.annonce.quartier
+                        +"\nType du bien: "+widget.annonce.type_bien+"\n"+"prix: "+widget.annonce.prix+" "+widget.annonce.negoce+"\n\nPrêt pour les négociations"+"\n"+lien+ widget.annonce.image3);
+                  }else if(widget.annonce.image4.isNotEmpty){
+                    launchWhatsApp(widget.annonce.admincontact,"Annonce Wimmo \n\n"+widget.annonce.intitule_bien+" \nLocalisation: "+widget.annonce.pays+"-"+widget.annonce.ville+"-"+widget.annonce.quartier
+                        +"\nType du bien: "+widget.annonce.type_bien+"\n"+"prix: "+widget.annonce.prix+" "+widget.annonce.negoce+"\n\nPrêt pour les négociations"+"\n"+lien+ widget.annonce.image4);
+                  }else{
+                    launchWhatsApp(widget.annonce.admincontact,"Annonce Wimmo \n\n"+widget.annonce.intitule_bien+" \nLocalisation: "+widget.annonce.pays+"-"+widget.annonce.ville+"-"+widget.annonce.quartier
+                        +"\nType du bien: "+widget.annonce.type_bien+"\n"+"prix: "+widget.annonce.prix+" "+widget.annonce.negoce+"\n\nPrêt pour les négociations"+"\nAucune image");
+                  }
                 },
                 child: Text("CONTACTER",
                   style: TextStyle(color: Colors.white, fontSize: 18,fontFamily: "Monteserrat"),),

@@ -13,10 +13,11 @@ class Signaler extends StatefulWidget {
 }
 
 class _SignalerState extends State<Signaler> {
-  String message;
   final GlobalKey<State> _keyLoader = new GlobalKey<State>();
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  final _formKey = GlobalKey<FormState>();
   TextEditingController contact;
+  TextEditingController messager;
   void _showMessageInScaffold(String message) {
     try {
       _scaffoldKey.currentState.showSnackBar(
@@ -40,29 +41,18 @@ class _SignalerState extends State<Signaler> {
     }
   }
   void _onLoading() {
-    if(message==""){
-      Navigator.pop(context);
-      echec("Message vide", "Ecrivez quelque chose");
-      return;
-    }
-    else {
       _handleSubmit(context);
-      SignalServices.addSignal(widget.annonce.id, message,contact.text).then((value) {
+      SignalServices.addSignal(widget.annonce.id, messager.text,contact.text).then((value) {
        if(value=="1"){
          Navigator.pop(context);
-         _showMessageInScaffold("Message envoyé avec succès");
+         succes();
          setState(() {
-           message="";
+          messager.text="";
          });
        }else{
-         Navigator.pop(context);
          _showMessageInScaffold("Message non envoyé");
-         setState(() {
-           message="";
-         });
        }
       });
-    }
   }
  retour(){
    Navigator.pop(context);
@@ -71,8 +61,8 @@ class _SignalerState extends State<Signaler> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    message = "";
     contact=TextEditingController();
+    messager=TextEditingController();
   }
   @override
   Widget build(BuildContext context) {
@@ -95,25 +85,31 @@ class _SignalerState extends State<Signaler> {
           child: Column(
             children: [
               Center(
-                child: TextFormField(
-                  onChanged: (String text){
-                    setState(() {
-                      message=text;
-                    });
-                  },
-                  autocorrect: false,
-                  textCapitalization: TextCapitalization.sentences,
-                  maxLines: null,
-                  decoration: InputDecoration(
-                      hintText: "Ecrivez un message aux administrateurs",
-                      suffixIcon: IconButton(
-                        icon: Icon(Icons.send),
-                        onPressed: (){
-                          _onLoading();
-                        },
-                      ),
-                      filled: true,
-                      fillColor: Colors.white70
+                child:  Form(
+                  key:_formKey,
+                  child: TextFormField(
+                    autocorrect: false,
+                    controller: messager,
+                    validator: (String message){
+                      if(message.isEmpty){
+                        return "Message vide, Dites nous votre soucis.";
+                      }
+                    },
+                    textCapitalization: TextCapitalization.sentences,
+                    maxLines: null,
+                    decoration: InputDecoration(
+                        hintText: "Ecrivez un message aux administrateurs",
+                        suffixIcon: IconButton(
+                          icon: Icon(Icons.send),
+                          onPressed: (){
+                            if (_formKey.currentState.validate()) {
+                              _onLoading();
+                            }
+                          },
+                        ),
+                        filled: true,
+                        fillColor: Colors.white70
+                    ),
                   ),
                 ),
               ),
@@ -180,7 +176,7 @@ class _SignalerState extends State<Signaler> {
                 actions: <Widget>[
                   new FlatButton(onPressed: () {
                     Navigator.pop(context);
-                  },
+                    },
                       child: new Text("OK")
                   ),
                 ],

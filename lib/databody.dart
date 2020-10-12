@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:grouped_buttons/grouped_buttons.dart';
@@ -5,7 +6,7 @@ import 'package:wimmobeta/constants.dart';
 import 'package:wimmobeta/details_screen.dart';
 import 'package:wimmobeta/product.dart';
 import 'package:wimmobeta/transition.dart';
-
+import 'package:searchable_dropdown/searchable_dropdown.dart';
 import 'Services/data.dart';
 class DataBody extends StatefulWidget {
 
@@ -19,8 +20,8 @@ class _DataBodyState extends State<DataBody> {
   static const String villa = "Maison ou Villa";
   static const String appartement = "Appartement";
   static const String bureau = "Bureau ou Boutique";
-
-  String _quartierselected = "";
+  static const String lien ="https://afriqueimmobilier.net/immo/images/";
+  Quartier selectedquartier;
   String quartierController;
   String superficieminController="";
   String prixminController="";
@@ -68,7 +69,6 @@ class _DataBodyState extends State<DataBody> {
           SizedBox(height: 12,),
           Expanded(
             child: ListView.builder(
-                padding: EdgeInsets.only(top:10.0),
                 itemCount:Filtreproducts.length,
                 itemBuilder: (BuildContext context, int index){
                   return GestureDetector(
@@ -80,7 +80,6 @@ class _DataBodyState extends State<DataBody> {
                           borderRadius: BorderRadius.circular(5.0)
                       ),
                       child: Card(
-                        margin: EdgeInsets.all(3.0),
                         borderOnForeground: true,
                         elevation: 3.0,
                         color: Colors.white,
@@ -96,8 +95,11 @@ class _DataBodyState extends State<DataBody> {
                                     child: Stack(
                                       children: <Widget>[
                                         Filtreproducts[index].image1!=null ?
-                                        Image.network(
-                                          "https://gerestock.com/immo/images/"+ Filtreproducts[index].image1,
+                                        CachedNetworkImage(
+                                          imageUrl: lien+Filtreproducts[index].image1,
+                                          progressIndicatorBuilder: (context, url, downloadProgress) =>
+                                              CircularProgressIndicator(value: downloadProgress.progress),
+                                          errorWidget: (context, url, error) => Icon(Icons.error,color:Colors.red),
                                           width: 100,
                                           height: 100,
                                         ):Container(),
@@ -138,26 +140,34 @@ class _DataBodyState extends State<DataBody> {
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     children: <Widget>[
-                                     Image.asset('assets/salon.png',fit: BoxFit.cover,),
+                                      Filtreproducts[index].nbsalon.isNotEmpty?
+                                     Image.asset('assets/salon.png',fit: BoxFit.cover,):Container(),
                                       SizedBox(width: 5.0,),
-                                     Text(Filtreproducts[index].nbsalon+" salon"),
+                                      Filtreproducts[index].nbsalon.isNotEmpty?
+                                     Text(Filtreproducts[index].nbsalon+" salon"):Container(),
                                       SizedBox(width: 8.0,),
-                                     Image.asset('assets/chambre.png',fit: BoxFit.cover,),
+                                      Filtreproducts[index].nbchambre.isNotEmpty?
+                                     Image.asset('assets/chambre.png',fit: BoxFit.cover,):Container(),
                                       SizedBox(width: 5.0,),
-                                      Text(Filtreproducts[index].nbchambre+" chambre"),
+                                      Filtreproducts[index].nbchambre.isNotEmpty?
+                                      Text(Filtreproducts[index].nbchambre+" chambre"):Container(),
                                     ],
                                   ):Container(),
                                   Filtreproducts[index].type_bien==appartement?
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     children: <Widget>[
-                                      Image.asset('assets/salon.png',fit: BoxFit.cover,),
+                                      Filtreproducts[index].nbsalon.isNotEmpty?
+                                      Image.asset('assets/salon.png',fit: BoxFit.cover,):Container(),
                                       SizedBox(width: 5.0,),
-                                      Text(Filtreproducts[index].nbsalon+" salon"),
+                                      Filtreproducts[index].nbsalon.isNotEmpty?
+                                      Text(Filtreproducts[index].nbsalon+" salon"):Container(),
                                       SizedBox(width: 8.0,),
-                                      Image.asset('assets/chambre.png',fit: BoxFit.cover,),
+                                      Filtreproducts[index].nbchambre.isNotEmpty?
+                                      Image.asset('assets/chambre.png',fit: BoxFit.cover,):Container(),
                                       SizedBox(width: 5.0,),
-                                      Text(Filtreproducts[index].nbchambre+" chambre"),
+                                      Filtreproducts[index].nbchambre.isNotEmpty?
+                                      Text(Filtreproducts[index].nbchambre+" chambre"):Container(),
                                     ],
                                   ):Container(),
                                   Filtreproducts[index].type_bien !="Parcelle"?
@@ -166,39 +176,51 @@ class _DataBodyState extends State<DataBody> {
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     children: <Widget>[
-                                     Image.asset('assets/cuisine.png',fit: BoxFit.cover,),
+                                      Filtreproducts[index].nbcuisine.isNotEmpty?
+                                     Image.asset('assets/cuisine.png',fit: BoxFit.cover,):Container(),
                                       SizedBox(width: 5.0,),
-                                     Text(Filtreproducts[index].nbcuisine+" cuisine"),
+                                      Filtreproducts[index].nbcuisine.isNotEmpty?
+                                     Text(Filtreproducts[index].nbcuisine+" cuisine"):Container(),
                                       SizedBox(width: 8.0,),
-                                      Image.asset('assets/bain.png',fit: BoxFit.cover,),
+                                      Filtreproducts[index].nbsalledebain.isNotEmpty?
+                                      Image.asset('assets/bain.png',fit: BoxFit.cover,):Container(),
                                       SizedBox(width: 5.0,),
-                                      Text(Filtreproducts[index].nbsalledebain+" douche"),
+                                      Filtreproducts[index].nbsalledebain.isNotEmpty?
+                                      Text(Filtreproducts[index].nbsalledebain+" douche"):Container(),
                                     ],
                                   ):Container(),
                                   Filtreproducts[index].type_bien==appartement?
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     children: <Widget>[
-                                      Image.asset('assets/cuisine.png',fit: BoxFit.cover,),
+                                      Filtreproducts[index].nbcuisine.isNotEmpty?
+                                      Image.asset('assets/cuisine.png',fit: BoxFit.cover,):Container(),
                                       SizedBox(width: 5.0,),
-                                      Text(Filtreproducts[index].nbcuisine+" cuisine"),
+                                      Filtreproducts[index].nbcuisine.isNotEmpty?
+                                      Text(Filtreproducts[index].nbcuisine+" cuisine"):Container(),
                                       SizedBox(width: 8.0,),
-                                      Image.asset('assets/bain.png',fit: BoxFit.cover,),
+                                      Filtreproducts[index].nbsalledebain.isNotEmpty?
+                                      Image.asset('assets/bain.png',fit: BoxFit.cover,):Container(),
                                       SizedBox(width: 5.0,),
-                                      Text(Filtreproducts[index].nbsalledebain+" douche"),
+                                      Filtreproducts[index].nbsalledebain.isNotEmpty?
+                                      Text(Filtreproducts[index].nbsalledebain+" douche"):Container(),
                                     ],
                                   ):Container(),
                                   Filtreproducts[index].type_bien==bureau?
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     children: <Widget>[
-                                      Image.asset('assets/bain.png',fit: BoxFit.cover,),
+                                      Filtreproducts[index].nbsalledebain.isNotEmpty?
+                                      Image.asset('assets/bain.png',fit: BoxFit.cover,):Container(),
                                       SizedBox(width: 5.0,),
-                                      Text(Filtreproducts[index].nbsalon+" douche"),
+                                      Filtreproducts[index].nbsalledebain.isNotEmpty?
+                                      Text(Filtreproducts[index].nbsalledebain+" douche"):Container(),
                                       SizedBox(width: 8.0,),
-                                      Image.asset('assets/chambre.png',fit: BoxFit.cover,),
+                                      Filtreproducts[index].nbchambre.isNotEmpty?
+                                      Image.asset('assets/chambre.png',fit: BoxFit.cover,):Container(),
                                       SizedBox(width: 5.0,),
-                                      Text(Filtreproducts[index].nbchambre+" pièce"),
+                                      Filtreproducts[index].nbchambre.isNotEmpty?
+                                      Text(Filtreproducts[index].nbchambre+" pièce"):Container(),
                                     ],
                                   ):Container(),
                                   SizedBox(height: 8.0,),
@@ -206,13 +228,13 @@ class _DataBodyState extends State<DataBody> {
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     children: <Widget>[
-                                      Filtreproducts[index].nbboutique!=null?
+                                      Filtreproducts[index].nbboutique.isNotEmpty?
                                       Text(Filtreproducts[index].nbboutique+" Boutique",style:TextStyle(fontSize:12,color:kPrimaryColor)):Container(),
                                       SizedBox(width: 5.0,),
-                                      Filtreproducts[index].nbmagasin!=null?
+                                      Filtreproducts[index].nbmagasin.isNotEmpty?
                                       Text(Filtreproducts[index].nbmagasin+" Magasin",style:TextStyle(fontSize:12,color:kPrimaryColor)):Container(),
                                       SizedBox(width: 5.0,),
-                                      Filtreproducts[index].nbhall!=null?
+                                      Filtreproducts[index].nbhall.isNotEmpty?
                                       Text(Filtreproducts[index].nbhall+" Hall",style:TextStyle(fontSize:12,color:kPrimaryColor)):Container(),
                                     ],
                                   ):Container(),
@@ -221,7 +243,7 @@ class _DataBodyState extends State<DataBody> {
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     children: <Widget>[
                                       Text(
-                                        produts[index].prix!=null? Filtreproducts[index].prix+" Fcfa ":'',
+                                        produts[index].prix!=null? moneyFormat(Filtreproducts[index].prix)+" Fcfa ":'',
                                         style: TextStyle(
                                             fontSize: 18.0,
                                             color: Colors.red,
@@ -249,10 +271,11 @@ class _DataBodyState extends State<DataBody> {
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     children: <Widget>[
-                                      Icon(Icons.location_on),
+                                      Icon(Icons.location_on,size: 12,),
                                       Text(
                                         Filtreproducts[index].quartier!=null? Filtreproducts[index].quartier+',':'',
                                         style: TextStyle(
+                                          fontSize:10,
                                             color: Colors.grey,
                                             fontWeight: FontWeight.bold,
                                             fontStyle: FontStyle.normal
@@ -261,6 +284,7 @@ class _DataBodyState extends State<DataBody> {
                                       Text(
                                         Filtreproducts[index].ville!=null? Filtreproducts[index].ville+'-':'',
                                         style: TextStyle(
+                                            fontSize:11,
                                             color: Colors.grey,
                                             fontWeight: FontWeight.bold,
                                             fontStyle: FontStyle.normal
@@ -269,6 +293,7 @@ class _DataBodyState extends State<DataBody> {
                                       Text(
                                         Filtreproducts[index].pays!=null? Filtreproducts[index].pays:'',
                                         style: TextStyle(
+                                            fontSize:11,
                                             color: Colors.grey,
                                             fontWeight: FontWeight.bold,
                                             fontStyle: FontStyle.normal
@@ -345,52 +370,28 @@ class _DataBodyState extends State<DataBody> {
                   ],
                 ),
               ),
-              Container(
-                decoration: new BoxDecoration(
-                  color: Colors.white,
-                  border: Border(
-                    right: BorderSide(width: 0.5, color: Colors.grey),
+              new  SearchableDropdown(
+                  hint: Text('Quartier'),
+                  items: filtreQuartierachat.map((item) {
+                    return new DropdownMenuItem<Quartier>(
+                        child: Text(item.intitulequartier), value: item);
+                  }).toList(),
+                  isExpanded: true,
+                  value: selectedquartier,
+                  isCaseSensitiveSearch: true,
+                  searchHint: new Text(
+                    'Selectionnez un quartier ',
+                    style: new TextStyle(fontSize: 20),
                   ),
-                ),
-                height: 45.0,
-                margin: const EdgeInsets.only(top: 20.0, right: 20.0, left: 20.0),
-                child: FormField(
-                  builder: (FormFieldState state) {
-                    return InputDecorator(
-                      decoration: InputDecoration(
-                        hintStyle: TextStyle(fontStyle: FontStyle.normal,color: kTextLigthtColor,fontSize: 15),
-                        hintText: "Quartier",
-                      ),
-                      isEmpty: _quartierselected == '',
-                      child: new DropdownButtonHideUnderline(
-                        child:ButtonTheme(
-                          alignedDropdown: true,
-                          child: DropdownButton(
-                            isDense: true,
-                            value: _quartierselected.isNotEmpty ? _quartierselected : null,
-                            onChanged: (String newValue){
-                              setState(() {
-                                  _quartierselected=newValue;
-                                  int index=int.parse(newValue);
-                                  quartierController= quartierachat[index-1].intitulequartier;
-                                  Filtreproducts = produts.where((element) =>
-                                  (element.quartier.toLowerCase().contains(quartierController.toLowerCase()))).toList();
-                              });
-                            },
-                            items: filtreQuartierachat.map((Quartier map){
-                              return new DropdownMenuItem(
-                                value: map.codequartier,
-                                child: Text(map.intitulequartier),
-                              );
-                            }
-                            ).toList(),
-                          ),
-                        ),
-                      ),
-                    );
+                  onChanged: (value) {
+                    setState(() {
+                      selectedquartier = value;
+                      quartierController=selectedquartier.intitulequartier;
+                      Filtreproducts = produts.where((element) =>
+                      (element.quartier.toLowerCase().contains(quartierController.toLowerCase()))).toList();
+                    });
                   },
                 ),
-              ),
             ],
           );
       }
