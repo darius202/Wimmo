@@ -15,9 +15,8 @@ class GetProduct{
       map['pays']=pays;
       map['ville']=ville;
       final response = await http.post(ROOT,body:map);
-      print('Voici le message du body getProduit : ${response.body}');
       if(200 == response.statusCode){
-        List<Product> list = parseResponse(response.body);
+        List<Product> list = parseResponse(response.bodyBytes);
         return list;
       }else{
         return List<Product>();
@@ -28,8 +27,8 @@ class GetProduct{
       return List<Product>();
     }
   }
-  static List<Product> parseResponse(String responseBody){
-    final parsed = json.decode(responseBody).cast<Map<String, dynamic>>();
+  static List<Product> parseResponse(final responseBody){
+    final parsed = json.decode(utf8.decode(responseBody)).cast<Map<String, dynamic>>();
     return parsed.map<Product>((json) => Product.fromJson(json)).toList();
   }
 
@@ -44,7 +43,6 @@ class Paysservices{
       var map= Map<String, dynamic>();
       map['action']= _GET_ALL_ACTION;
       final response = await http.post(ROOT,body:map);
-      print('Voici le message du body getPays : ${response.body}');
       if(200 == response.statusCode){
         List<Pays> list = parseResponse(response.body);
         return list;
@@ -73,7 +71,6 @@ class Villeservices{
       var map= Map<String, dynamic>();
       map['action']= _GET_VILE_ACTION;
       final response = await http.post(ROOT,body:map);
-      print('Voici le message du body getVille: ${response.body}');
       if(200 == response.statusCode){
         List<Ville> list = parseResponse(response.body);
         return list;
@@ -103,7 +100,6 @@ class Quartierservices{
       map['action']= _GET_QUARTIER_ACTION;
 
       final response = await http.post(ROOT,body:map);
-      print('Voici le message du body getQuartier: ${response.body}');
       if(200 == response.statusCode){
         List<Quartier> list = parseResponse(response.body);
         return list;
@@ -133,7 +129,6 @@ class TypeBienservices{
       map['action']= _GET_QUARTIER_ACTION;
 
       final response = await http.post(ROOT,body:map);
-      print('Voici le message du body getQuartier: ${response.body}');
       if(200 == response.statusCode){
         List<Mandat> list = parseResponse(response.body);
         return list;
@@ -164,7 +159,6 @@ class Situationservices{
       map['action']= _GET_QUARTIER_ACTION;
 
       final response = await http.post(ROOT,body:map);
-      print('Voici le message du body getSituationadmin: ${response.body}');
       if(200 == response.statusCode){
         List<Situationadmin> list = parseResponse(response.body);
         return list;
@@ -193,7 +187,6 @@ class Bienservices{
       map['action']= _GET_QUARTIER_ACTION;
 
       final response = await http.post(ROOT,body:map);
-      print('Voici le message du body getQuartier: ${response.body}');
       if(200 == response.statusCode){
         List<Bienlouable> list = parseResponse(response.body);
         return list;
@@ -224,7 +217,6 @@ class Etageservices{
       map['action']= _GET_QUARTIER_ACTION;
 
       final response = await http.post(ROOT,body:map);
-      print('Voici le message du body getQuartier: ${response.body}');
       if(200 == response.statusCode){
         List<Etage> list = parseResponse(response.body);
         return list;
@@ -252,7 +244,6 @@ class SignalServices{
       map['message']= message;
       map['contact']= contact;
       final response = await http.post('https://afriqueimmobilier.net/immo/signalbien.php',body:map);
-      print('Voici le message du body addProduit: ${response.body}');
       if(200 == response.statusCode){
         return response.body;
       }else{
@@ -273,7 +264,6 @@ class SuggestionServices{
       map['message']= message;
       map['contact']= contact;
       final response = await http.post('https://afriqueimmobilier.net/immo/suggestion.php',body:map);
-      print('Voici le message du body addProduit: ${response.body}');
       if(200 == response.statusCode){
         return response.body;
       }else{

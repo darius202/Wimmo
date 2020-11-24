@@ -137,11 +137,11 @@ class Etage{
     );
   }
 }
-List <Pays> pays;
-List <Ville> ville;
-List <Quartier> quartier;
-List <Mandat> mandat;
-List <Etage> etage;
-List <Bienlouable> louable;
+List <Pays> pays=List();
+List <Ville> ville=List();
+List <Quartier> quartier=List();
+List <Mandat> mandat= List();
+List <Etage> etage= List();
+List <Bienlouable> louable= List();
 List <Quartier> quartierachat = List();
 List <Quartier> filtreQuartierachat = List();

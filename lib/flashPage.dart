@@ -7,25 +7,10 @@ import 'package:wimmobeta/Services/Servicespage.dart';
 import 'package:wimmobeta/transition.dart';
 class SplashScreen extends StatefulWidget {
   @override
-  State<StatefulWidget> createState() {
-    return SplashState();
-  }
+  SplashState createState() => SplashState();
 }
 
 class SplashState extends State<SplashScreen> {
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    _getVille();
-    _getPays();
-    _getQuartier();
-    _getMandat();
-    _getlouable();
-    _getEtage();
-    _getSituation();
-    startTime();
-  }
   _getSituation(){
     Situationservices.getSituationadmin().then((value) {
       situation=value;
@@ -74,6 +59,41 @@ class SplashState extends State<SplashScreen> {
       });
     });
   }
+  startTime() async {
+    var duration = new Duration(seconds: 6);
+    return new Timer(duration, route);
+  }
+  route() {
+
+    if(pays.length ==0 || ville.length ==0 ||  quartier.length==0 || louable.length==0 || etage.length==0)
+    {
+      Navigator.push(context,  SlideRightRoute(page:Connector())).then((value) {
+        setState(() {
+          _getVille();
+          _getPays();
+          _getQuartier();
+          _getMandat();
+          _getlouable();
+          _getEtage();
+          startTime();
+        });
+      });
+    }else
+      Navigator.pushReplacement(context, SlideRightRoute(page:Admin()));
+  }
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _getVille();
+    _getPays();
+    _getQuartier();
+    _getMandat();
+    _getlouable();
+    _getEtage();
+    _getSituation();
+    startTime();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -81,27 +101,6 @@ class SplashState extends State<SplashScreen> {
     );
   }
 
-  startTime() async {
-    var duration = new Duration(seconds: 6);
-    return new Timer(duration, route);
-  }
-  route() {
-    if(pays.length ==0 || ville.length ==0 ||  quartier.length==0 || louable.length==0 || etage.length==0)
-      {
-        Navigator.push(context,  SlideRightRoute(page:  Connector())).then((value) {
-          setState(() {
-            _getVille();
-            _getPays();
-            _getQuartier();
-            _getMandat();
-            _getlouable();
-            _getEtage();
-            startTime();
-          });
-        });
-      }else
-    Navigator.pushReplacement(context, SlideRightRoute(page:  Admin()));
-  }
 
   initScreen(BuildContext context) {
     return Scaffold(
